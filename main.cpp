@@ -1,16 +1,31 @@
 #include <iostream>
 #include <string>
 
+#include "src/chunk_types.hpp"
+#include "src/chunk_reader.hpp"
+
 int main() {
-    std::cout << "Hello, World!" << std::endl;
 
-    char* s = (char*)malloc(4);
-    snprintf(s, 4, "%x", 12);
+    FILE* file = fopen("../lua_tests/luac.out", "rb");
 
-    std::string str = s;
-    delete[] s;
+    if(!file) {
+        assert(false && "failed to open file.");
+    }
 
-    printf("%x", true);
+    fseek(file, 0, SEEK_END);
+    long fileSize = ftell(file);
+    fseek(file, 0, SEEK_SET);
+
+    char* source = new char[fileSize];
+
+    fread(source, sizeof(byte), fileSize, file);
+    fclose(file);
+
+    ChunkReader reader((byte*)source);
+
+    reader.CheckHeader();
+    reader.SkipUpValueNum();
+    Prototype p = reader.ReadPrototype();
 
     return 0;
 }

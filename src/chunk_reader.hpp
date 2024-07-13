@@ -68,14 +68,18 @@ private:
     std::string ReadString() {
         uint8 size = ReadByte();
 
-        if(size == 0){
+        if(size == 0) {
             return "";
         }
 
-        char* c_str = new char[size+1];
-        memcpy(c_str, _data, size);
-        _data += size;
-        c_str[size] = '\0';
+        if(size == 0xff) {
+            size = (uint8) ReadUint64();
+        }
+
+        char* c_str = new char[size];
+        memcpy(c_str, _data, size-1);
+        _data += (size-1);
+        c_str[size-1] = '\0';
         std::string str = c_str;
 
         delete[] c_str;
@@ -115,14 +119,14 @@ private:
         }
     }
 
-    std::vector<uint32> ReadCodes() {
+    std::vector<uint32> ReadCode() {
         uint32 size = ReadUint32();
-        std::vector<uint32> codes(size, 0);
+        std::vector<uint32> code(size, 0);
 
         for (int i = 0; i < size; ++i) {
-            codes[i] = ReadUint32();
+            code[i] = ReadUint32();
         }
-        return codes;
+        return code;
     }
 
     std::vector<Constant> ReadConstants() {
@@ -158,24 +162,34 @@ private:
 
     std::vector<LocalVar> ReadLocVars() {
         uint32 size = ReadUint32();
-        std::vector<LocalVar> locVars(size, {0, 0, 0});
+        std::vector<LocalVar> locVars(size);
 
         for (int i = 0; i < size; ++i) {
             locVars[i].varName = ReadString();
             locVars[i].startPc = ReadUint32();
-            locVars[i].endPc =   ReadUint32();
+            locVars[i].endPc   = ReadUint32();
         }
         return locVars;
     }
 
     std::vector<std::string> ReadUpValueNames() {
         uint32 size = ReadUint32();
-        std::vector<std::string> upValueNames(size, 0);
+        std::vector<std::string> upValueNames(size, "");
 
         for (int i = 0; i < size; ++i) {
             upValueNames[i] = ReadString();
         }
         return upValueNames;
+    }
+
+    std::vector<Prototype> ReadPrototypes(std::string parentSource) {
+        uint32 size = ReadUint32();
+        std::vector<Prototype> prototypes(size);
+
+        for (int i = 0; i < size; ++i) {
+            prototypes[i] = ReadPrototype(parentSource);
+        }
+        return prototypes;
     }
 
 public:
@@ -204,9 +218,37 @@ public:
         assert(ReadLuaInteger() == LUAC_INT && "endianness mismatch");
 
         assert(ReadLuaNumber() == LUAC_NUM && "float format mismatch!");
+
+        // 17 + 16 = 33
     }
 
+    void SkipUpValueNum() {
+        ReadByte();
+    }
 
+    Prototype ReadPrototype(std::string parentSource = "") {
+        std::string source = ReadString();
+
+        if(source.size() == 0) {
+            source = parentSource;
+        }
+
+        return Prototype{
+            .source =           source,
+            .lineDefined =      ReadUint32(),
+            .lastLineDefined =  ReadUint32(),
+            .numParams =        ReadByte(),
+            .isVararg =         ReadByte(),
+            .maxStackSize =     ReadByte(),
+            .code =             ReadCode(),
+            .constants =        ReadConstants(),
+            .upValues =         ReadUpValues(),
+            .prototypes =       ReadPrototypes(source),
+            .lineInfos =        ReadLineInfos(),
+            .locVars =          ReadLocVars(),
+            .upValueNames =     ReadUpValueNames()
+        };
+    }
 };
 
 

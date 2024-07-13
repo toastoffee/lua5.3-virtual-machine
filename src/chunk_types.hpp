@@ -27,7 +27,7 @@ typedef double   float64;
 
 
 const char*  LUA_SIGNATURE    = "\x1bLua";
-const int    LUAC_VERSION     = 0x54;
+const int    LUAC_VERSION     = 0x53;
 const int    LUAC_FORMAT      = 0;
 const char*  LUAC_DATA        = "\x19\x93\r\n\x1a\n";
 const int    CINT_SIZE        = 4;
@@ -122,19 +122,19 @@ public:
 };
 
 struct Prototype {
-    char*                    source;
-    uint32_t                 lineDefined;
-    uint32_t                 lastLineDefined;
+    std::string              source;
+    uint32                   lineDefined;
+    uint32                   lastLineDefined;
     byte                     numParams;
     byte                     isVararg;
     byte                     maxStackSize;
-    std::vector<uint32_t>    code;
+    std::vector<uint32>      code;
     std::vector<Constant>    constants;
     std::vector<UpValue>     upValues;
-    std::vector<Prototype*>  prototypes;
-    std::vector<uint32_t>    lineInfos;
+    std::vector<Prototype>  prototypes;
+    std::vector<uint32>      lineInfos;
     std::vector<LocalVar>    locVars;
-    std::vector<char*>       upValueNames;
+    std::vector<std::string> upValueNames;
 };
 
 struct binaryChunk {
