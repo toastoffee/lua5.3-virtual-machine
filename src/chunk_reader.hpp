@@ -114,6 +114,99 @@ private:
                 assert(false && "corrupted!");
         }
     }
+
+    std::vector<uint32> ReadCodes() {
+        uint32 size = ReadUint32();
+        std::vector<uint32> codes(size, 0);
+
+        for (int i = 0; i < size; ++i) {
+            codes[i] = ReadUint32();
+        }
+        return codes;
+    }
+
+    std::vector<Constant> ReadConstants() {
+        uint32 size = ReadUint32();
+        std::vector<Constant> constants(size, 0);
+
+        for (int i = 0; i < size; ++i) {
+            constants[i] = ReadConstant();
+        }
+        return constants;
+    }
+
+    std::vector<UpValue> ReadUpValues() {
+        uint32 size = ReadUint32();
+        std::vector<UpValue> upValues(size, {0, 0});
+
+        for (int i = 0; i < size; ++i) {
+            upValues[i].instack = ReadByte();
+            upValues[i].idx = ReadByte();
+        }
+        return upValues;
+    }
+
+    std::vector<uint32> ReadLineInfos() {
+        uint32 size = ReadUint32();
+        std::vector<uint32> lineInfos(size, 0);
+
+        for (int i = 0; i < size; ++i) {
+            lineInfos[i] = ReadUint32();
+        }
+        return lineInfos;
+    }
+
+    std::vector<LocalVar> ReadLocVars() {
+        uint32 size = ReadUint32();
+        std::vector<LocalVar> locVars(size, {0, 0, 0});
+
+        for (int i = 0; i < size; ++i) {
+            locVars[i].varName = ReadString();
+            locVars[i].startPc = ReadUint32();
+            locVars[i].endPc =   ReadUint32();
+        }
+        return locVars;
+    }
+
+    std::vector<std::string> ReadUpValueNames() {
+        uint32 size = ReadUint32();
+        std::vector<std::string> upValueNames(size, 0);
+
+        for (int i = 0; i < size; ++i) {
+            upValueNames[i] = ReadString();
+        }
+        return upValueNames;
+    }
+
+public:
+    explicit ChunkReader(byte* data) : _data(data) { }
+
+    void CheckHeader() {
+
+        assert(strcmp((char*)ReadBytes(4), LUA_SIGNATURE) == 0 && "not a precompiled chunk!");
+
+        assert(ReadByte() == LUAC_VERSION && "version mismatch!");
+
+        assert(ReadByte() == LUAC_FORMAT && "format mismatch!");
+
+        assert(strcmp((char*)ReadBytes(6), LUAC_DATA) == 0 && "corrupted!");
+
+        assert(ReadByte() == CINT_SIZE && "int size mismatch!");
+
+        assert(ReadByte() == CSIZET_SIZE && "size_t size mismatch!");
+
+        assert(ReadByte() == INSTRUCTION_SIZE && "instruction size mismatch!");
+
+        assert(ReadByte() == LUA_INTEGER_SIZE && "lua_Integer size mismatch!");
+
+        assert(ReadByte() == LUA_NUMBER_SIZE && "lua_Number size mismatch!");
+
+        assert(ReadLuaInteger() == LUAC_INT && "endianness mismatch");
+
+        assert(ReadLuaNumber() == LUAC_NUM && "float format mismatch!");
+    }
+
+
 };
 
 

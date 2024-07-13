@@ -61,14 +61,15 @@ struct ChunkHeader {
 
 
 struct UpValue {
+public:
     byte instack;
     byte idx;
 };
 
 struct LocalVar {
-    char*    varName;
-    uint32_t startPc;
-    uint32_t endPc;
+    std::string varName;
+    uint32_t    startPc;
+    uint32_t    endPc;
 };
 
 struct Constant{
