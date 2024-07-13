@@ -252,4 +252,13 @@ public:
 };
 
 
+Prototype UnDump(byte data[]){
+    ChunkReader reader(data);
+    reader.CheckHeader();
+    reader.SkipUpValueNum();
+    Prototype proto = reader.ReadPrototype();
+    return proto;
+}
+
+
 #endif //LUA5_3_DECOMPILER_CHUNK_READER_HPP

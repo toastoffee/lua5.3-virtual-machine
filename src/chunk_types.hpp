@@ -143,4 +143,5 @@ struct binaryChunk {
     Prototype*  mainFunc;
 };
 
+
 #endif //LUA5_3_DECOMPILER_CHUNK_TYPES_HPP

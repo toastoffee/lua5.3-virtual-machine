@@ -23,7 +23,7 @@ void PrintHeader(Prototype* prototype) {
     if(prototype->isVararg > 0) { varargFlag = "+"; }
 
     printf("\n%s <%s:%d,%d> (%d instructions)\n",
-           funcType, prototype->source.c_str(), prototype->lineDefined, (int)prototype->code.size());
+           funcType, prototype->source.c_str(), prototype->lineDefined,prototype->lastLineDefined, (int)prototype->code.size());
 
     printf("%d%s params, %d slots, %d upValues, ",
            prototype->numParams, varargFlag, prototype->maxStackSize, (int)prototype->upValues.size());

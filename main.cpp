@@ -22,12 +22,8 @@ int main() {
     fread(source, sizeof(byte), fileSize, file);
     fclose(file);
 
-    ChunkReader reader((byte*)source);
 
-    reader.CheckHeader();
-    reader.SkipUpValueNum();
-    Prototype p = reader.ReadPrototype();
-
+    Prototype p = UnDump((byte*)source);
     ListChunk(&p);
 
     return 0;
