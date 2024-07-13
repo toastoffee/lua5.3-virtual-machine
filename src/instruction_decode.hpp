@@ -38,13 +38,29 @@ void ABx(Instruction i, int& a, int& bx) {
 
 void AsBx(Instruction i, int& a, int& sbx) {
     ABx(i, a, sbx);
-    sbx -= MAX_ARG_sBx;
+    sbx -= MAX_ARG_sBx;     // offset binary, excess-K
     return;
 }
 
 void Ax(Instruction i, int& a) {
     a = (int)(i >> 6);
     return;
+}
+
+std::string GetOpName(Instruction i) {
+    return opcodes[GetOpcode(i)].name;
+}
+
+byte GetOpMode(Instruction i) {
+    return opcodes[GetOpcode(i)].opMode;
+}
+
+byte GetBMode(Instruction i) {
+    return opcodes[GetOpcode(i)].argBMode;
+}
+
+byte GetCMode(Instruction i) {
+    return opcodes[GetOpcode(i)].argCMode;
 }
 
 #endif //LUA5_3_DECOMPILER_INSTRUCTION_DECODE_HPP
