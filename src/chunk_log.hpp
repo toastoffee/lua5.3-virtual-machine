@@ -14,6 +14,8 @@
 #define LUA5_3_DECOMPILER_CHUNK_LOG_HPP
 
 #include "chunk_types.hpp"
+#include "instruction_decode.hpp"
+
 
 void PrintHeader(Prototype* prototype) {
     const char* funcType = "main";
@@ -32,12 +34,50 @@ void PrintHeader(Prototype* prototype) {
            (int)prototype->locVars.size(), (int)prototype->constants.size(), (int)prototype->prototypes.size());
 }
 
+void PrintOperands(Instruction i) {
+    int a, b, c, bx;
+    switch (GetOpMode(i)) {
+        case IABC:
+            ABC(i, a, b, c);
+            printf("%d", a);
+            if(GetBMode(i) != OpArgN) {
+                if(b > 0xff) {
+                    printf(" %d", -1 - (b&0xff));
+                } else {
+                    printf(" %d", b);
+                }
+            }
+            if(GetCMode(i) != OpArgN) {
+                if(c > 0xff) {
+                    printf(" %d", -1 - (c&0xff));
+                } else {
+                    printf(" %d", c);
+                }
+            }
+            break;
+        case IABx:
+            ABx(i, a, bx);
+            printf("%d", a);
+            if(GetBMode(i) == OpArgK) {
+                printf(" %d", -1-bx);
+            } else {
+                printf(" %d", bx);
+            }
+            break;
+        case IAsBx:
+            
+    }
+}
+
 void PrintCode(Prototype* p) {
     printf("functions\n");
     size_t codeCount = p->code.size();
 
     for (int i = 0; i < codeCount; ++i) {
-        printf("\t%d\t[%d]\t0x%08x\n", i+1, p->lineInfos[i], p->code[i]);
+        Instruction ins = p->code[i];
+        printf("\t%d\t[%d]\t%s \t", i+1, p->lineInfos[i], GetOpName(ins).c_str());
+        PrintOperands(i);
+        printf("\n");
     }
 }
 
