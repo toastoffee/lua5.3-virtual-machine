@@ -3,6 +3,7 @@
 
 #include "src/chunk_types.hpp"
 #include "src/chunk_reader.hpp"
+#include "src/chunk_log.hpp"
 
 int main() {
 
@@ -26,6 +27,8 @@ int main() {
     reader.CheckHeader();
     reader.SkipUpValueNum();
     Prototype p = reader.ReadPrototype();
+
+    ListChunk(&p);
 
     return 0;
 }

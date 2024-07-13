@@ -110,8 +110,8 @@ public:
                 break;
             case TAG_SHORT_STR:
             case TAG_LONG_STR:
-                cs = (char*) malloc(0);
-                s = '\"' + _s + '\"';
+                cs = (char*) malloc(_s.size() + 3);
+                snprintf(cs, _s.size() + 3, "\"%s\"", _s.c_str());
                 break;
         }
 
