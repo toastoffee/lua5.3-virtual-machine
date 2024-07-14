@@ -26,17 +26,17 @@ typedef int64_t  int64;
 typedef double   float64;
 
 
-const char*  LUA_SIGNATURE    = "\x1bLua";
-const int    LUAC_VERSION     = 0x53;
-const int    LUAC_FORMAT      = 0;
-const char*  LUAC_DATA        = "\x19\x93\r\n\x1a\n";
-const int    CINT_SIZE        = 4;
-const int    CSIZET_SIZE      = 8;
-const int    INSTRUCTION_SIZE = 4;
-const int    LUA_INTEGER_SIZE = 8;
-const int    LUA_NUMBER_SIZE  = 8;
-const int    LUAC_INT         = 0x5678;
-const double LUAC_NUM         = 370.5;
+const char* const LUA_SIGNATURE    = "\x1bLua";
+const int         LUAC_VERSION     = 0x53;
+const int         LUAC_FORMAT      = 0;
+const char* const LUAC_DATA        = "\x19\x93\r\n\x1a\n";
+const int         CINT_SIZE        = 4;
+const int         CSIZET_SIZE      = 8;
+const int         INSTRUCTION_SIZE = 4;
+const int         LUA_INTEGER_SIZE = 8;
+const int         LUA_NUMBER_SIZE  = 8;
+const int         LUAC_INT         = 0x5678;
+const double      LUAC_NUM         = 370.5;
 
 const byte TAG_NIL       = 0x00;
 const byte TAG_BOOLEAN   = 0x01;

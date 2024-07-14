@@ -10,6 +10,8 @@
 
 #include "lua_state.hpp"
 
+
+
 int LuaState::GetTop() {
     return _stack->GetTop();
 }

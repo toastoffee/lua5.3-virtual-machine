@@ -2,8 +2,8 @@
 #include <string>
 
 #include "src/chunk_types.hpp"
-#include "src/chunk_reader.hpp"
 #include "src/chunk_log.hpp"
+#include "src/chunk_reader.hpp"
 
 #include <algorithm>
 
@@ -25,8 +25,8 @@ int main() {
     fclose(file);
 
 
-//    Prototype p = UnDump((byte*)source);
-//    ListChunk(&p);
+    Prototype p = UnDump((byte*)source);
+    ListChunk(&p);
 
     return 0;
 }
