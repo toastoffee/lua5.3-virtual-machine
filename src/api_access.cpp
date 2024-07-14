@@ -27,7 +27,7 @@ std::string LuaState::TypeName(LuaType tp) {
 LuaType LuaState::Type(int idx) {
     if(_stack->IsValid(idx)) {
         LuaValue val = _stack->Get(idx);
-        return TypeOf(val);
+        return val.TypeOf(val);
     }
     return LUA_TNONE;
 }
@@ -64,7 +64,7 @@ bool LuaState::IsInteger(int idx) {
 
 bool LuaState::ToBoolean(int idx) {
     LuaValue val = _stack->Get(idx);
-    return ConvertToBoolean(val);
+    return val.ConvertToBoolean(val);
 }
 
 float64 LuaState::ToNumber(int idx) {

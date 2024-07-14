@@ -47,43 +47,42 @@ public:
     T GetVal(){
         return *(T*)_val;
     }
+
+    bool ConvertToBoolean(LuaValue val) {
+        if(val.GetType() == typeid(Nil).name()) {
+            return false;
+        }
+        else if(val.GetType() == typeid(bool).name()) {
+            return val.GetVal<bool>();
+        }
+        else{
+            return true;
+        }
+    }
+
+    int TypeOf(LuaValue val) {
+        if(val.GetType() == typeid(Nil).name()) {
+            return LUA_TNIL;
+        }
+        else if(val.GetType() == typeid(bool).name()) {
+            return LUA_TBOOLEAN;
+        }
+        else if(val.GetType() == typeid(int64).name()) {
+            return LUA_TNUMBER;
+        }
+        else if(val.GetType() == typeid(float64).name()) {
+            return LUA_TNUMBER;
+        }
+        else if(val.GetType() == typeid(std::string).name()) {
+            return LUA_TSTRING;
+        }
+        else{
+            assert(false && "todo!");
+        }
+    }
 };
 
-int TypeOf(LuaValue val) {
-    if(val.GetType() == typeid(Nil).name()) {
-        return LUA_TNIL;
-    }
-    else if(val.GetType() == typeid(bool).name()) {
-        return LUA_TBOOLEAN;
-    }
-    else if(val.GetType() == typeid(int64).name()) {
-        return LUA_TNUMBER;
-    }
-    else if(val.GetType() == typeid(float64).name()) {
-        return LUA_TNUMBER;
-    }
-    else if(val.GetType() == typeid(std::string).name()) {
-        return LUA_TSTRING;
-    }
-    else{
-        assert(false && "todo!");
-    }
-}
-
 const LuaValue nil;
-
-
-bool ConvertToBoolean(LuaValue val) {
-    if(val.GetType() == typeid(Nil).name()) {
-        return false;
-    }
-    else if(val.GetType() == typeid(bool).name()) {
-        return val.GetVal<bool>();
-    }
-    else{
-        return true;
-    }
-}
 
 
 #endif //LUA5_3_DECOMPILER_LUA_VALUE_HPP
