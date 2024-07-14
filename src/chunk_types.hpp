@@ -94,7 +94,7 @@ public:
         switch (_tag) {
             case TAG_NIL:
                 cs = (char*)malloc(4);
-                snprintf(cs, 4, "nil");
+                snprintf(cs, 4, "Nil");
                 break;
             case TAG_BOOLEAN:
                 cs = (char*)malloc(4);

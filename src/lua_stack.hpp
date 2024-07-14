@@ -15,6 +15,7 @@
 
 #include "lua_value.hpp"
 
+#include <algorithm>
 
 struct LuaStack {
 private:
@@ -31,7 +32,7 @@ public:
         return new LuaStack(new LuaValue[size], size, 0);
     }
 
-    void check(int n) {
+    void Check(int n) {
         int free = _slotSize - _top;
         if(n <= free) return;
 
@@ -42,7 +43,7 @@ public:
         _slots = newSlots;
     }
 
-    void push(LuaValue val) {
+    void Push(LuaValue val) {
         assert(_top < _slotSize && "stack overflow!");
 
         _slots[_top] = val;
@@ -85,6 +86,18 @@ public:
 
         _slots[absIdx-1] = val;
         return;
+    }
+
+    int GetTop() const {
+        return _top;
+    }
+
+    void Reverse(int from, int to) {
+        if(to > from) {
+            std::reverse(_slots + from, _slots + to + 1);
+        } else if(to < from) {
+            Reverse(to, from);
+        }
     }
 };
 

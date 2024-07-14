@@ -19,14 +19,19 @@ typedef int LuaType;
 
 class LuaState {
 private:
-    LuaStack _stack;
+    LuaStack *_stack;
     Prototype proto;
     int pc;
 
 public:
+
+    LuaState() {
+        _stack = LuaStack::NewLuaStack(20);
+    }
+
     /* basic stack manipulation */
     int GetTop();
-    int AbsIndex();
+    int AbsIndex(int idx);
     bool CheckStack(int n);
     void Pop(int n);
     void Copy(int fromIdx, int toIdx);

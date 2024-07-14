@@ -18,8 +18,7 @@
 #include "lua_consts.hpp"
 #include "chunk_types.hpp"
 
-struct nil{ };
-
+struct Nil{ };
 
 class LuaValue {
 private:
@@ -29,7 +28,7 @@ public:
 
     LuaValue() {
         _val = nullptr;
-        _type = typeid(nil).name();
+        _type = typeid(Nil).name();
     }
 
     template<typename T>
@@ -44,7 +43,7 @@ public:
 
 template<typename T>
 int TypeOf(T t) {
-    if(typeid(t) == typeid(nil)) {
+    if(typeid(t) == typeid(Nil)) {
         return LUA_TNIL;
     }
     else if(typeid(t) == typeid(bool)) {
@@ -63,6 +62,8 @@ int TypeOf(T t) {
         assert(false && "todo!");
     }
 }
+
+const LuaValue nil;
 
 
 #endif //LUA5_3_DECOMPILER_LUA_VALUE_HPP
