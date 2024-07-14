@@ -27,6 +27,11 @@ private:
     std::string _type;
 public:
 
+    LuaValue() {
+        _val = nullptr;
+        _type = typeid(nil).name();
+    }
+
     template<typename T>
     explicit LuaValue(T val) {
         _val = new T;

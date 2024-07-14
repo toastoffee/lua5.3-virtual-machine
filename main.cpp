@@ -24,9 +24,8 @@ int main() {
     fclose(file);
 
 
-    Prototype p = UnDump((byte*)source);
-    ListChunk(&p);
-
+//    Prototype p = UnDump((byte*)source);
+//    ListChunk(&p);
 
     return 0;
 }
