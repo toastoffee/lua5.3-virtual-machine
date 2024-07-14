@@ -4,6 +4,7 @@
 #include "src/chunk_types.hpp"
 #include "src/chunk_reader.hpp"
 #include "src/chunk_log.hpp"
+#include "src/lua_value.hpp"
 
 int main() {
 
@@ -25,6 +26,7 @@ int main() {
 
     Prototype p = UnDump((byte*)source);
     ListChunk(&p);
+
 
     return 0;
 }

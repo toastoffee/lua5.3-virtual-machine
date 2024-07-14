@@ -13,6 +13,7 @@
 #ifndef LUA5_3_DECOMPILER_LUA_CONSTS_HPP
 #define LUA5_3_DECOMPILER_LUA_CONSTS_HPP
 
+
 const int LUA_TNONE = -1,
           LUA_TNIL = 0,
           LUA_TBOOLEAN = 1,
