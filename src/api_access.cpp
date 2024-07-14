@@ -31,3 +31,35 @@ LuaType LuaState::Type(int idx) {
     }
     return LUA_TNONE;
 }
+
+bool LuaState::IsNone(int idx) {
+    return Type(idx) == LUA_TNONE;
+}
+
+bool LuaState::IsNil(int idx) {
+    return Type(idx) == LUA_TNIL;
+}
+
+bool LuaState::IsNoneOrNil(int idx) {
+    return IsNone(idx) || IsNil(idx);
+}
+
+bool LuaState::IsBoolean(int idx) {
+    return Type(idx) == LUA_TBOOLEAN;
+}
+
+bool LuaState::IsString(int idx) {
+    return Type(idx) == LUA_TSTRING || Type(idx) == LUA_TNUMBER;
+}
+
+bool LuaState::IsNumber(int idx) {
+    auto t = ToNumberX(idx);
+    return std::get<1>(t);
+}
+
+bool LuaState::IsInteger(int idx) {
+    LuaValue val = _stack->Get(idx);
+    return val.GetType() == typeid(int64).name();
+}
+
+

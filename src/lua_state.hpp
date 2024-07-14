@@ -54,11 +54,11 @@ public:
     bool IsString(int idx);
     bool ToBoolean(int idx);
     bool ToInteger(int idx);
-    bool ToIntegerX(int idx);
+    std::tuple<int64, bool> ToIntegerX(int idx);
     bool ToNumber(int idx);
-    bool ToNumberX(int idx);
+    std::tuple<float64 , bool> ToNumberX(int idx);
     bool ToString(int idx);
-    bool ToStringX(int idx);
+    std::tuple<std::string, bool> ToStringX(int idx);
 
     /* push functions (c++ -> stack) */
     void PushNil();
