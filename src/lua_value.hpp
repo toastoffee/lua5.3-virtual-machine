@@ -20,6 +20,23 @@
 
 struct nil{ };
 
+
+class LuaValue {
+private:
+    void* _val;
+    std::string _type;
+public:
+
+    template<typename T>
+    explicit LuaValue(T val) {
+        _val = new T;
+        *(T*)_val = val;
+
+        _type = typeid(val).name();
+    }
+
+};
+
 template<typename T>
 int TypeOf(T t) {
     if(typeid(t) == typeid(nil)) {
