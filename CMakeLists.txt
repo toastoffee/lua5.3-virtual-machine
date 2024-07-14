@@ -7,4 +7,5 @@ add_executable(lua5_3_decompiler
         main.cpp
         src/api_stack.cpp
         src/api_push.cpp
+        src/api_access.cpp
 )

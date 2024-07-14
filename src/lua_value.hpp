@@ -39,23 +39,25 @@ public:
         _type = typeid(val).name();
     }
 
+    std::string GetType() {
+        return _type;
+    }
 };
 
-template<typename T>
-int TypeOf(T t) {
-    if(typeid(t) == typeid(Nil)) {
+int TypeOf(LuaValue val) {
+    if(val.GetType() == typeid(Nil).name()) {
         return LUA_TNIL;
     }
-    else if(typeid(t) == typeid(bool)) {
+    else if(val.GetType() == typeid(bool).name()) {
         return LUA_TBOOLEAN;
     }
-    else if(typeid(t) == typeid(int64)) {
+    else if(val.GetType() == typeid(int64).name()) {
         return LUA_TNUMBER;
     }
-    else if(typeid(t) == typeid(float64)) {
+    else if(val.GetType() == typeid(float64).name()) {
         return LUA_TNUMBER;
     }
-    else if(typeid(t) == typeid(std::string)) {
+    else if(val.GetType() == typeid(std::string).name()) {
         return LUA_TSTRING;
     }
     else{
