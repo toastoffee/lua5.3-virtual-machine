@@ -64,8 +64,28 @@ public:
         }
         return idx + _top + 1;
     }
-    
 
+    bool IsValid(int idx) {
+        int absIdx = AbsIndex(idx);
+        return absIdx > 0 && absIdx <= _top;
+    }
+
+    LuaValue Get(int idx) {
+        int absIdx = AbsIndex(idx);
+
+        if(IsValid(absIdx)) {
+            return _slots[absIdx-1];
+        }
+        return LuaValue();
+    }
+
+    void Set(int idx, LuaValue val) {
+        int absIdx = AbsIndex(idx);
+        assert(absIdx > 0 && absIdx <= _top && "invalid index!");
+
+        _slots[absIdx-1] = val;
+        return;
+    }
 };
 
 #endif //LUA5_3_DECOMPILER_LUA_STACK_HPP
