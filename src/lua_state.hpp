@@ -23,10 +23,34 @@ private:
     Prototype proto;
     int pc;
 
+    std::string boolToString(bool value) {
+        return value ? "true" : "false";
+    }
+
 public:
 
     LuaState() {
         _stack = LuaStack::NewLuaStack(20);
+    }
+
+    void PrintStack() {
+        for (int i = 1; i <= _stack->GetTop(); ++i) {
+            auto t = Type(i);
+            switch (t) {
+                case LUA_TBOOLEAN:
+                    printf("[%s]", boolToString(ToBoolean(i)).c_str());
+                    break;
+                case LUA_TNUMBER:
+                    printf("[%f]", ToNumber(i));
+                    break;
+                case LUA_TSTRING:
+                    printf("[%s]", ToString(i).c_str());
+                    break;
+                default:
+                    printf("[%s]", TypeName(t).c_str());
+            }
+        }
+        printf("\n");
     }
 
     /* basic stack manipulation */
@@ -66,6 +90,7 @@ public:
     void PushInteger(int64 n);
     void PushNumber(float64 n);
     void PushString(std::string s);
+
 };
 
 
