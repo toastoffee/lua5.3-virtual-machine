@@ -62,4 +62,67 @@ bool LuaState::IsInteger(int idx) {
     return val.GetType() == typeid(int64).name();
 }
 
+bool LuaState::ToBoolean(int idx) {
+    LuaValue val = _stack->Get(idx);
+    return ConvertToBoolean(val);
+}
 
+float64 LuaState::ToNumber(int idx) {
+    auto t = ToNumberX(idx);
+    return std::get<0>(t);
+}
+
+std::tuple<float64, bool> LuaState::ToNumberX(int idx) {
+    LuaValue val = _stack->Get(idx);
+
+    if(val.GetType() == typeid(float64).name()) {
+        return std::make_tuple(val.GetVal<float64>(), true);
+    }
+    else if(val.GetType() == typeid(int64).name()) {
+        return std::make_tuple((float64) val.GetVal<int64>(), true);
+    }
+    else {
+        return std::make_tuple(0, false);
+    }
+}
+
+int64 LuaState::ToInteger(int idx) {
+    auto t = ToIntegerX(idx);
+    return std::get<0>(t);
+}
+
+std::tuple<int64, bool> LuaState::ToIntegerX(int idx) {
+    LuaValue val = _stack->Get(idx);
+
+    if(val.GetType() == typeid(int64).name()) {
+        return std::make_tuple(val.GetVal<int64>(), true);
+    } else{
+        return std::make_tuple(0, false);
+    }
+}
+
+std::string LuaState::ToString(int idx) {
+    auto t = ToStringX(idx);
+    return std::get<0>(t);
+}
+
+std::tuple<std::string, bool> LuaState::ToStringX(int idx) {
+    LuaValue val = _stack->Get(idx);
+
+    if(val.GetType() == typeid(std::string).name()) {
+        return std::make_tuple(val.GetVal<std::string>(), true);
+    }
+    else if(val.GetType() == typeid(int64).name()) {
+        std::string s = std::to_string(val.GetVal<int64>());
+        _stack->Set(idx, LuaValue(s));
+        return std::make_tuple(s, true);
+    }
+    else if(val.GetType() == typeid(float64).name()) {
+        std::string s = std::to_string(val.GetVal<float64>());
+        _stack->Set(idx, LuaValue(s));
+        return std::make_tuple(s, true);
+    }
+    else {
+        return std::make_tuple("", false);
+    }
+}

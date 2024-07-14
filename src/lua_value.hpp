@@ -42,6 +42,11 @@ public:
     std::string GetType() {
         return _type;
     }
+
+    template<typename T>
+    T GetVal(){
+        return *(T*)_val;
+    }
 };
 
 int TypeOf(LuaValue val) {
@@ -66,6 +71,19 @@ int TypeOf(LuaValue val) {
 }
 
 const LuaValue nil;
+
+
+bool ConvertToBoolean(LuaValue val) {
+    if(val.GetType() == typeid(Nil).name()) {
+        return false;
+    }
+    else if(val.GetType() == typeid(bool).name()) {
+        return val.GetVal<bool>();
+    }
+    else{
+        return true;
+    }
+}
 
 
 #endif //LUA5_3_DECOMPILER_LUA_VALUE_HPP
