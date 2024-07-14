@@ -35,7 +35,7 @@ void PrintHeader(Prototype* prototype) {
 }
 
 void PrintOperands(Instruction i) {
-    int a, b, c, bx;
+    int a, b, c, bx, sbx, ax;
     switch (GetOpMode(i)) {
         case IABC:
             ABC(i, a, b, c);
@@ -65,7 +65,12 @@ void PrintOperands(Instruction i) {
             }
             break;
         case IAsBx:
-            
+            AsBx(i, a, sbx);
+            printf("%d %d", a, sbx);
+            break;
+        case IAx:
+            Ax(i, ax);
+            printf("%d", -1-ax);
     }
 }
 
@@ -75,8 +80,9 @@ void PrintCode(Prototype* p) {
 
     for (int i = 0; i < codeCount; ++i) {
         Instruction ins = p->code[i];
-        printf("\t%d\t[%d]\t%s \t", i+1, p->lineInfos[i], GetOpName(ins).c_str());
-        PrintOperands(i);
+        printf("\t%d\t[%d]\t%s\t", i+1, p->lineInfos[i], GetOpName(ins).c_str());
+        PrintOperands(ins);
+//        printf("\t(0x%08x)", ins);
         printf("\n");
     }
 }
