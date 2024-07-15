@@ -43,6 +43,5 @@ int main() {
 //    ls.Remove(-3);          ls.PrintStack();
 //    ls.SetTop(-5);          ls.PrintStack();
 
-
     return 0;
 }

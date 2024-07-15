@@ -64,3 +64,57 @@ Operator operators[] = {
         Operator{iunm,   funm },
         Operator{bnot,   nullptr  },
 };
+
+
+LuaValue _arith(LuaValue a, LuaValue b, Operator op) {
+    if(op.floatFunc == nullptr) {   // bitwise
+        auto x = a.ConvertToInteger(a);
+        if(std::get<1>(x)) {
+            auto y = a.ConvertToInteger(b);
+            if(std::get<1>(y)) {
+                int64 r = op.integerFunc(std::get<0>(x), std::get<0>(y));
+                return LuaValue(r);
+            }
+        }
+    } else {    // arith
+        if(op.integerFunc != nullptr) {     // add,sub,mul,mod,idiv,unm
+            auto x = a.ConvertToInteger(a);
+            if(std::get<1>(x)) {
+                auto y = a.ConvertToInteger(b);
+                if(std::get<1>(y)) {
+                    int64 r = op.integerFunc(std::get<0>(x), std::get<0>(y));
+                    return LuaValue(r);
+                }
+            }
+        }
+        auto x = a.ConvertToFloat(a);
+        if(std::get<1>(x)) {
+            auto y = a.ConvertToFloat(b);
+            if(std::get<1>(y)) {
+                float64 r = op.floatFunc(std::get<0>(x), std::get<0>(y));
+                return LuaValue(r);
+            }
+        }
+    }
+
+    return LuaValue();
+}
+
+void LuaState::Arith(ArithOp op) {
+    LuaValue a, b;
+    b = _stack->Pop();
+    if(op != LUA_OPUNM && op != LUA_OPBNOT) {
+        a = _stack->Pop();
+    } else {
+        a = b;
+    }
+
+    Operator opFuncs = operators[op];
+
+    LuaValue res = _arith(a, b, opFuncs);
+    if(res.GetType() != typeid(Nil).name()) {
+        _stack->Push(res);
+    } else {
+        assert(false && "arithmetic error!");
+    }
+}
