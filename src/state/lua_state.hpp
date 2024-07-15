@@ -16,6 +16,8 @@
 #include "lua_stack.hpp"
 
 typedef int LuaType;
+typedef int ArithOp;
+typedef int CompareOp;
 
 class LuaState {
 private:
@@ -91,6 +93,10 @@ public:
     void PushNumber(float64 n);
     void PushString(std::string s);
 
+    void Arith(ArithOp op);
+    bool Compare(int idx1, int idx2, CompareOp op);
+    void Len(int idx);
+    void Concat(int n);
 };
 
 
