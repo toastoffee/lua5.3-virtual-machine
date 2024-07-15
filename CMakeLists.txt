@@ -12,4 +12,5 @@ add_executable(lua5_3_decompiler
         src/number/math.h
         src/number/parser.cpp
         src/number/parser.h
+        src/state/api_arith.cpp
 )
