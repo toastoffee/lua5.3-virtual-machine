@@ -26,16 +26,16 @@ void LuaState::Concat(int n) {
         _stack->Push(LuaValue(""));
     }
     else if(n >= 2) {
-        for (int i = 0; i < n; ++i) {
+        for (int i = 1; i < n; ++i) {
             if(IsString(-1) && IsString(-2)) {
                 std::string s2 = ToString(-1);
                 std::string s1 = ToString(-2);
                 _stack->Pop();
                 _stack->Pop();
-                _stack->Push(LuaValue(s1+s2));
+                _stack->Push(LuaValue(s1 + s2));
                 continue;
             }
+            assert(false && "concatenation error!");
         }
-        assert(false && "concatenation error!");
     }
 }

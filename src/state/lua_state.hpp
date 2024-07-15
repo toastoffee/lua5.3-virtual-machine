@@ -46,7 +46,7 @@ public:
                     printf("[%f]", ToNumber(i));
                     break;
                 case LUA_TSTRING:
-                    printf("[%s]", ToString(i).c_str());
+                    printf("[\"%s\"]", ToString(i).c_str());
                     break;
                 default:
                     printf("[%s]", TypeName(t).c_str());
