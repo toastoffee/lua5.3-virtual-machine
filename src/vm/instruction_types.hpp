@@ -13,7 +13,7 @@
 #ifndef LUA5_3_DECOMPILER_INSTRUCTION_TYPES_HPP
 #define LUA5_3_DECOMPILER_INSTRUCTION_TYPES_HPP
 
-#include "chunk_types.hpp"
+#include "../binChunk/chunk_types.hpp"
 
 
 typedef uint32_t Instruction;

@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 add_executable(lua5_3_decompiler
         main.cpp
-        src/api_stack.cpp
-        src/api_push.cpp
-        src/api_access.cpp
+        src/state/api_stack.cpp
+        src/state/api_push.cpp
+        src/state/api_access.cpp
 )

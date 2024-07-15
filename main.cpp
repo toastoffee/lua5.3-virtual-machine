@@ -1,11 +1,11 @@
 #include <iostream>
 #include <string>
 
-#include "src/chunk_types.hpp"
-#include "src/chunk_log.hpp"
-#include "src/chunk_reader.hpp"
+#include "src/binChunk/chunk_types.hpp"
+#include "src/binChunk/chunk_log.hpp"
+#include "src/binChunk/chunk_reader.hpp"
 
-#include "src/lua_state.hpp"
+#include "src/state/lua_state.hpp"
 
 
 #include <algorithm>
@@ -32,18 +32,16 @@ int main() {
 //    ListChunk(&p);
 
     // 2. test lua state
-
-    LuaState ls;
-
-    ls.PushBoolean(true);    ls.PrintStack();
-    ls.PushInteger(10);      ls.PrintStack();
-    ls.PushNil();               ls.PrintStack();
-    ls.PushString("hello");  ls.PrintStack();
-    ls.PushValue(-4);       ls.PrintStack();
-    ls.Replace(3);          ls.PrintStack();
-    ls.SetTop(6);           ls.PrintStack();
-    ls.Remove(-3);          ls.PrintStack();
-    ls.SetTop(-5);          ls.PrintStack();
+//    LuaState ls;
+//    ls.PushBoolean(true);    ls.PrintStack();
+//    ls.PushInteger(10);      ls.PrintStack();
+//    ls.PushNil();               ls.PrintStack();
+//    ls.PushString("hello");  ls.PrintStack();
+//    ls.PushValue(-4);       ls.PrintStack();
+//    ls.Replace(3);          ls.PrintStack();
+//    ls.SetTop(6);           ls.PrintStack();
+//    ls.Remove(-3);          ls.PrintStack();
+//    ls.SetTop(-5);          ls.PrintStack();
 
 
     return 0;

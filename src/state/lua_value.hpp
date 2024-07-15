@@ -16,7 +16,7 @@
 #include <typeinfo>
 
 #include "lua_consts.hpp"
-#include "chunk_types.hpp"
+#include "../binChunk/chunk_types.hpp"
 
 struct Nil{ };
 

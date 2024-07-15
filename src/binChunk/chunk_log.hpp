@@ -14,7 +14,7 @@
 #define LUA5_3_DECOMPILER_CHUNK_LOG_HPP
 
 #include "chunk_types.hpp"
-#include "instruction_decode.hpp"
+#include "../vm/instruction_decode.hpp"
 
 
 void PrintHeader(Prototype* prototype) {

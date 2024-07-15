@@ -14,7 +14,7 @@
 #define LUA5_3_DECOMPILER_INSTRUCTION_DECODE_HPP
 
 #include "instruction_types.hpp"
-#include "chunk_types.hpp"
+#include "../binChunk/chunk_types.hpp"
 
 const int MAX_ARG_Bx = (1 << 18) - 1;
 const int MAX_ARG_sBx = MAX_ARG_Bx >> 1;
