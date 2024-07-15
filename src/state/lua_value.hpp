@@ -18,12 +18,29 @@
 #include "lua_consts.hpp"
 #include "../binChunk/chunk_types.hpp"
 
+#include "../number/parser.h"
+#include "../number/math.h"
+
 struct Nil{ };
 
 class LuaValue {
 private:
     void* _val;
     std::string _type;
+
+private:
+    std::tuple<int64, bool> _stringToInteger(std::string s) {
+        auto t_i = ParseInteger(s);
+        if(std::get<1>(t_i)) {
+            return t_i;
+        }
+        auto t_d = ParseFloat(s);
+        if(std::get<1>(t_d)) {
+            return FloatToInteger(std::get<0>(t_d));
+        }
+        return std::make_tuple(0, false);
+    }
+
 public:
 
     LuaValue() {
@@ -57,6 +74,36 @@ public:
         }
         else{
             return true;
+        }
+    }
+
+    std::tuple<float64, bool> ConvertToFloat(LuaValue val) {
+        if(val.GetType() == typeid(float64).name()) {
+            return std::make_tuple(val.GetVal<float64>(), true);
+        }
+        else if(val.GetType() == typeid(int64).name()) {
+            return std::make_tuple((float64)val.GetVal<int64>(), true);
+        }
+        else if(val.GetType() == typeid(std::string).name()) {
+            return ParseFloat(val.GetVal<std::string>());
+        }
+        else{
+            return std::make_tuple(0, false);
+        }
+    }
+
+    std::tuple<int64 , bool> ConvertToInteger(LuaValue val) {
+        if(val.GetType() == typeid(int64).name()) {
+            return std::make_tuple(val.GetVal<int64>(), true);
+        }
+        else if(val.GetType() == typeid(float64).name()) {
+            return FloatToInteger(val.GetVal<float64>());
+        }
+        else if(val.GetType() == typeid(std::string).name()) {
+            return _stringToInteger(val.GetVal<std::string>());
+        }
+        else{
+            return std::make_tuple(0, false);
         }
     }
 

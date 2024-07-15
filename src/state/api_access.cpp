@@ -75,15 +75,7 @@ float64 LuaState::ToNumber(int idx) {
 std::tuple<float64, bool> LuaState::ToNumberX(int idx) {
     LuaValue val = _stack->Get(idx);
 
-    if(val.GetType() == typeid(float64).name()) {
-        return std::make_tuple(val.GetVal<float64>(), true);
-    }
-    else if(val.GetType() == typeid(int64).name()) {
-        return std::make_tuple((float64) val.GetVal<int64>(), true);
-    }
-    else {
-        return std::make_tuple(0, false);
-    }
+    return val.ConvertToFloat(val);
 }
 
 int64 LuaState::ToInteger(int idx) {
@@ -94,11 +86,13 @@ int64 LuaState::ToInteger(int idx) {
 std::tuple<int64, bool> LuaState::ToIntegerX(int idx) {
     LuaValue val = _stack->Get(idx);
 
-    if(val.GetType() == typeid(int64).name()) {
-        return std::make_tuple(val.GetVal<int64>(), true);
-    } else{
-        return std::make_tuple(0, false);
-    }
+//    if(val.GetType() == typeid(int64).name()) {
+//        return std::make_tuple(val.GetVal<int64>(), true);
+//    } else{
+//        return std::make_tuple(0, false);
+//    }
+
+    return val.ConvertToInteger(val);
 }
 
 std::string LuaState::ToString(int idx) {

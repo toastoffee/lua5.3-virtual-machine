@@ -47,3 +47,9 @@ int64 ShiftRight(int64 a, int64 n) {
         return ShiftLeft(a, -n);
     }
 }
+
+std::tuple<int64, bool> FloatToInteger(float64 f) {
+    int64 i = (int64)f;
+    return std::make_tuple(i, (float64)i == f);
+}
+

@@ -27,6 +27,7 @@ int64 ShiftLeft(int64 a, int64 n);
 
 int64 ShiftRight(int64 a, int64 n);
 
+std::tuple<int64, bool> FloatToInteger(float64 f);
 
 
 #endif //LUA5_3_DECOMPILER_MATH_H
