@@ -31,6 +31,7 @@ class Inst {
     static void LoadK(Instruction i, LuaVM vm);
     static void LoadKx(Instruction i, LuaVM vm);
 
+    
 };
 
 #endif //LUA5_3_DECOMPILER_INST_H
