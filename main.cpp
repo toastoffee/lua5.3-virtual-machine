@@ -44,7 +44,7 @@ int main() {
 //    ls.SetTop(-5);          ls.PrintStack();
 
     // 5.4 test calc
-    LuaState ls;
+    LuaState ls(20, nullptr);
     ls.PushInteger(1);
     ls.PushString("2.0");
     ls.PushString("3.0");

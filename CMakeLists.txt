@@ -15,4 +15,5 @@ add_executable(lua5_3_decompiler
         src/state/api_arith.cpp
         src/state/api_compare.cpp
         src/state/api_misc.cpp
+        src/state/api_vm.cpp
 )
