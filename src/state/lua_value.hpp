@@ -56,6 +56,27 @@ public:
         _type = typeid(val).name();
     }
 
+    static LuaValue ConvertFromConst(Constant c) {
+        switch (c._tag) {
+            case TAG_NIL:
+                return LuaValue();
+                break;
+            case TAG_BOOLEAN:
+                return LuaValue(c._b);
+                break;
+            case TAG_NUMBER:
+                return LuaValue(c._d);
+                break;
+            case TAG_INTEGER:
+                return LuaValue(c._i);
+                break;
+            case TAG_SHORT_STR:
+            case TAG_LONG_STR:
+                return LuaValue(c._s);
+                break;
+        }
+    }
+
     std::string GetType() {
         return _type;
     }

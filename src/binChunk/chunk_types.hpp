@@ -73,7 +73,7 @@ struct LocalVar {
 };
 
 struct Constant{
-private:
+public:
     byte _tag;
 
     bool _b;
