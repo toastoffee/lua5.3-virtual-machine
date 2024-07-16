@@ -24,8 +24,13 @@ typedef LuaState LuaVM;
 class Inst {
 
     static void Move(Instruction i, LuaVM vm);
-
     static void Jmp(Instruction i, LuaVM vm);
+
+    static void LoadNil(Instruction i, LuaVM vm);
+    static void LoadBool(Instruction i, LuaVM vm);
+    static void LoadK(Instruction i, LuaVM vm);
+    static void LoadKx(Instruction i, LuaVM vm);
+
 
 };
 
