@@ -15,7 +15,7 @@
 
 #include <typeinfo>
 
-#include "lua_consts.hpp"
+#include "../api/lua_consts.hpp"
 #include "../binChunk/chunk_types.hpp"
 
 #include "../number/parser.h"

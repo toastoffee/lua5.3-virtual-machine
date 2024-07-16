@@ -13,7 +13,8 @@
 #ifndef LUA5_3_DECOMPILER_LUA_STATE_HPP
 #define LUA5_3_DECOMPILER_LUA_STATE_HPP
 
-#include "lua_stack.hpp"
+#include "../state/lua_stack.hpp"
+#include "../vm/instruction_types.hpp"
 
 typedef int LuaType;
 typedef int ArithOp;
@@ -97,6 +98,14 @@ public:
     bool Compare(int idx1, int idx2, CompareOp op);
     void Len(int idx);
     void Concat(int n);
+
+
+    /* lua vm functions */
+    int PC();                   // get current pc
+    void AddPC(int n);          // modify pc (to realize JMP)
+    Instruction Fetch();        // fetch current instruction, make pc point to next instruction
+    void GetConst(int idx);     // push current const to stack
+    void GetRK(int rk);         // push current const or stack value to stack
 };
 
 

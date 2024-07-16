@@ -5,7 +5,7 @@
 #include "src/binChunk/chunk_log.hpp"
 #include "src/binChunk/chunk_reader.hpp"
 
-#include "src/state/lua_state.hpp"
+#include "src/api/lua_state.hpp"
 
 
 #include <algorithm>

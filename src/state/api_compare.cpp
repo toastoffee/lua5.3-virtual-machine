@@ -8,7 +8,7 @@
   ******************************************************************************
   */
 
-#include "lua_state.hpp"
+#include "../api/lua_state.hpp"
 
 bool _eq(LuaValue a, LuaValue b) {
     if(a.GetType() == typeid(Nil).name()) {

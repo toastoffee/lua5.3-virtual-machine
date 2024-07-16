@@ -8,7 +8,7 @@
   ******************************************************************************
   */
 
-#include "lua_state.hpp"
+#include "../api/lua_state.hpp"
 
 std::string LuaState::TypeName(LuaType tp) {
     switch (tp) {

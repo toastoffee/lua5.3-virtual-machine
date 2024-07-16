@@ -8,7 +8,7 @@
   ******************************************************************************
   */
 
-#include "lua_state.hpp"
+#include "../api/lua_state.hpp"
 #include "../number/math.h"
 
 /* basic funcs */
