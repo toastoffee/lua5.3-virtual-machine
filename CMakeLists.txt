@@ -18,4 +18,5 @@ add_executable(lua5_3_decompiler
         src/state/api_vm.cpp
         src/vm/inst.h
         src/vm/inst_misc.cpp
+        src/vm/inst_load.cpp
 )
