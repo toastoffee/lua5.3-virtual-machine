@@ -32,17 +32,17 @@ void _unaryArith(Instruction i, LuaVM vm, ArithOp op) {
     vm.Replace(a);
 }
 
-void add(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPADD); }
-void sub(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPSUB); }
-void mul(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPMUL); }
-void mod(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPMOD); }
-void pow(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPPOW); }
-void div(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPDIV); }
-void idiv(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPIDIV); }
-void band(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPBAND); }
-void bor(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPBOR); }
-void bxor(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPBXOR); }
-void shl(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPSHL); }
-void shr(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPSHR); }
-void unm(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPUNM); }
-void bnot(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPBNOT); }
+void Inst::Add(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPADD); }
+void Inst::Sub(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPSUB); }
+void Inst::Mul(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPMUL); }
+void Inst::Mod(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPMOD); }
+void Inst::Pow(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPPOW); }
+void Inst::Div(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPDIV); }
+void Inst::Idiv(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPIDIV); }
+void Inst::Band(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPBAND); }
+void Inst::Bor(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPBOR); }
+void Inst::Bxor(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPBXOR); }
+void Inst::Shl(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPSHL); }
+void Inst::Shr(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPSHR); }
+void Inst::Unm(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPUNM); }
+void Inst::Bnot(Instruction i, LuaVM vm) { _binaryArith(i, vm, LUA_OPBNOT); }
