@@ -31,7 +31,20 @@ class Inst {
     static void LoadK(Instruction i, LuaVM vm);
     static void LoadKx(Instruction i, LuaVM vm);
 
-    
+    static void Add(Instruction i, LuaVM vm);
+    static void Sub(Instruction i, LuaVM vm);
+    static void Mul(Instruction i, LuaVM vm);
+    static void Mod(Instruction i, LuaVM vm);
+    static void Pow(Instruction i, LuaVM vm);
+    static void Div(Instruction i, LuaVM vm);
+    static void Idiv(Instruction i, LuaVM vm);
+    static void Band(Instruction i, LuaVM vm);
+    static void Bor(Instruction i, LuaVM vm);
+    static void Bxor(Instruction i, LuaVM vm);
+    static void Shl(Instruction i, LuaVM vm);
+    static void Shr(Instruction i, LuaVM vm);
+    static void Unm(Instruction i, LuaVM vm);
+    static void Bnot(Instruction i, LuaVM vm);
 };
 
 #endif //LUA5_3_DECOMPILER_INST_H
