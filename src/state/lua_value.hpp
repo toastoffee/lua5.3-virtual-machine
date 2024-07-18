@@ -23,10 +23,17 @@
 
 struct Nil{ };
 
+typedef int LuaValueID;
+
+int luaValueIdCounter = 0;
+
 class LuaValue {
 private:
     void* _val;
     std::string _type;
+
+public:
+    LuaValueID id;
 
 private:
     std::tuple<int64, bool> _stringToInteger(std::string s) {
@@ -46,6 +53,7 @@ public:
     LuaValue() {
         _val = nullptr;
         _type = typeid(Nil).name();
+        id = luaValueIdCounter++;
     }
 
     template<typename T>
@@ -54,6 +62,7 @@ public:
         *(T*)_val = val;
 
         _type = typeid(val).name();
+        id = luaValueIdCounter++;
     }
 
     static LuaValue ConvertFromConst(Constant c) {
