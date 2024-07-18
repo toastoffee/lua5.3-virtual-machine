@@ -53,6 +53,13 @@ class Inst {
     static void Lt(Instruction i, LuaVM& vm);
     static void Le(Instruction i, LuaVM& vm);
 
+    static void Not(Instruction i, LuaVM& vm);
+    static void TestSet(Instruction i, LuaVM& vm);
+    static void Test(Instruction i, LuaVM& vm);
+
+    static void ForPrep(Instruction i, LuaVM& vm);
+    static void ForLoop(Instruction i, LuaVM& vm);
+
 };
 
 void Inst::Move(Instruction i, LuaVM& vm) {
@@ -196,5 +203,86 @@ void _compare(Instruction i, LuaVM& vm, CompareOp op) {
     }
     vm.Pop(2);
 }
+
+void Inst::Eq(Instruction i, LuaVM &vm) {
+    _compare(i, vm, LUA_OPEQ);
+}
+
+void Inst::Lt(Instruction i, LuaVM &vm) {
+    _compare(i, vm, LUA_OPLT);
+}
+
+void Inst::Le(Instruction i, LuaVM &vm) {
+    _compare(i, vm, LUA_OPLE);
+}
+
+void Inst::Not(Instruction i, LuaVM &vm) {
+    int a, b, _;
+    ABC(i, a, b, _);
+    a += 1;
+    b += 1;
+
+    vm.PushBoolean(!vm.ToBoolean(b));
+    vm.Replace(a);
+}
+
+void Inst::TestSet(Instruction i, LuaVM &vm) {
+    int a, b, c;
+    ABC(i, a, b, c);
+    a += 1;
+    b += 1;
+
+    if(vm.ToBoolean(b) == (c!=0)) {
+        vm.Copy(b, a);
+    } else {
+      vm.AddPC(1);
+    }
+}
+
+void Inst::Test(Instruction i, LuaVM &vm) {
+    int a, _, c;
+    ABC(i, a, _, c);
+    a += 1;
+
+    if(vm.ToBoolean(a) != (c != 0)) {
+        vm.AddPC(1);
+    }
+}
+
+void Inst::ForPrep(Instruction i, LuaVM &vm) {
+    int a, sbx;
+    AsBx(i, a, sbx);
+    a += 1;
+
+    // R(A) -= R(A+2)
+    vm.PushValue(a);
+    vm.PushValue(a + 2);
+    vm.Arith(LUA_OPSUB);
+    vm.Replace(a);
+
+    // pc += sbx
+    vm.AddPC(sbx);
+}
+
+void Inst::ForLoop(Instruction i, LuaVM &vm) {
+    int a, sbx;
+    AsBx(i, a, sbx);
+    a += 1;
+
+    // R(A) += R(A+2)
+    vm.PushValue(a + 2);
+    vm.PushValue(a);
+    vm.Arith(LUA_OPADD);
+    vm.Replace(a);
+
+    // R(A) <?= R(A+1)
+    bool isPositiveStep = vm.ToNumber(a+2) >= 0;
+    if(isPositiveStep && vm.Compare(a, a+1, LUA_OPLE) ||
+        !isPositiveStep && vm.Compare(a+1, a, LUA_OPLE)) {
+        vm.AddPC(sbx);
+        vm.Copy(a, a+3);
+    }
+}
+
 
 #endif //LUA5_3_DECOMPILER_INST_H
