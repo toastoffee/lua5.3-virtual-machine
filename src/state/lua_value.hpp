@@ -24,15 +24,10 @@
 struct Nil{ };
 
 
-int luaValueIdCounter = 0;
-
 class LuaValue {
 private:
     void* _val;
     std::string _type;
-
-public:
-    int _id;
 
 private:
     std::tuple<int64, bool> _stringToInteger(std::string s) {
@@ -52,7 +47,6 @@ public:
     LuaValue() {
         _val = nullptr;
         _type = typeid(Nil).name();
-        _id = luaValueIdCounter++;
     }
 
     template<typename T>
@@ -61,11 +55,10 @@ public:
         *(T*)_val = val;
 
         _type = typeid(val).name();
-        _id = luaValueIdCounter++;
     }
 
     bool operator<(const LuaValue& v) const {
-        return _id < v._id;
+        return _type < v._type;
     }
 
     static LuaValue ConvertFromConst(Constant c) {
@@ -142,26 +135,7 @@ public:
         }
     }
 
-    int TypeOf(LuaValue val) {
-        if(val.GetType() == typeid(Nil).name()) {
-            return LUA_TNIL;
-        }
-        else if(val.GetType() == typeid(bool).name()) {
-            return LUA_TBOOLEAN;
-        }
-        else if(val.GetType() == typeid(int64).name()) {
-            return LUA_TNUMBER;
-        }
-        else if(val.GetType() == typeid(float64).name()) {
-            return LUA_TNUMBER;
-        }
-        else if(val.GetType() == typeid(std::string).name()) {
-            return LUA_TSTRING;
-        }
-        else{
-            assert(false && "todo!");
-        }
-    }
+    int TypeOf(LuaValue val);
 };
 
 const LuaValue nil;

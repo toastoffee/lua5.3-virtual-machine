@@ -9,6 +9,7 @@
   */
 
 #include "../api/lua_state.hpp"
+#include "../state/lua_table.hpp"
 
 void LuaState::Len(int idx) {
     LuaValue val = _stack->Get(idx);
@@ -16,7 +17,12 @@ void LuaState::Len(int idx) {
     if(val.GetType() == typeid(std::string).name()) {
         auto newVal = LuaValue((int64)val.GetVal<std::string>().length());
         _stack->Push(newVal);
-    } else {
+    }
+    else if(val.GetType() == typeid(LuaTable).name()) {
+        auto newVal = LuaValue(val.GetVal<LuaTable>().Len());
+        _stack->Push(newVal);
+    }
+    else {
         assert(false && "length error!");
     }
 }
