@@ -74,6 +74,8 @@ public:
             case TAG_LONG_STR:
                 return LuaValue(c._s);
                 break;
+            default:
+                return LuaValue();
         }
     }
 

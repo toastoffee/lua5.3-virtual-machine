@@ -7,6 +7,7 @@
 
 #include "src/api/lua_state.hpp"
 
+#include "src/vm/inst.h"
 
 #include <algorithm>
 
