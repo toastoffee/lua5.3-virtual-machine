@@ -23,6 +23,7 @@ typedef LuaState LuaVM;
 
 class Inst {
 
+public:
     static void Move(Instruction i, LuaVM& vm);
     static void Jmp(Instruction i, LuaVM& vm);
 
@@ -130,8 +131,13 @@ void _binaryArith(Instruction i, LuaVM& vm, ArithOp op) {
     ABC(i, a, b, c);
     a += 1;
 
-    vm.GetRK(b);
+//    vm.GetRK(b);
+//    vm.GetRK(c);  // 为啥是反着的呢？？？？
+
+
     vm.GetRK(c);
+    vm.GetRK(b);
+
     vm.Arith(op);
     vm.Replace(a);
 }
@@ -282,6 +288,7 @@ void Inst::ForLoop(Instruction i, LuaVM &vm) {
         vm.AddPC(sbx);
         vm.Copy(a, a+3);
     }
+
 }
 
 

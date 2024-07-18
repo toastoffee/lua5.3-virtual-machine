@@ -47,20 +47,5 @@ void Ax(Instruction i, int& a) {
     return;
 }
 
-std::string GetOpName(Instruction i) {
-    return opcodes[GetOpcode(i)].name;
-}
-
-byte GetOpMode(Instruction i) {
-    return opcodes[GetOpcode(i)].opMode;
-}
-
-byte GetBMode(Instruction i) {
-    return opcodes[GetOpcode(i)].argBMode;
-}
-
-byte GetCMode(Instruction i) {
-    return opcodes[GetOpcode(i)].argCMode;
-}
 
 #endif //LUA5_3_DECOMPILER_INSTRUCTION_DECODE_HPP

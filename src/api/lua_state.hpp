@@ -16,6 +16,7 @@
 #include "../state/lua_stack.hpp"
 #include "../vm/instruction_types.hpp"
 
+
 typedef int LuaType;
 typedef int ArithOp;
 typedef int CompareOp;
@@ -44,7 +45,7 @@ public:
                     printf("[%s]", boolToString(ToBoolean(i)).c_str());
                     break;
                 case LUA_TNUMBER:
-                    printf("[%f]", ToNumber(i));
+                    printf("[%g]", ToNumber(i));
                     break;
                 case LUA_TSTRING:
                     printf("[\"%s\"]", ToString(i).c_str());

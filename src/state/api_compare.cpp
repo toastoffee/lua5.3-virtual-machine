@@ -109,9 +109,9 @@ bool LuaState::Compare(int idx1, int idx2, CompareOp op) {
         case LUA_OPEQ:
             return _eq(a, b);
         case LUA_OPLT:
-            return _eq(a, b);
+            return _lt(a, b);
         case LUA_OPLE:
-            return _eq(a, b);
+            return _le(a, b);
         default:
             assert(false && "invalid compare op!");
     }
