@@ -15,12 +15,12 @@
 
 #include "lua_value.hpp"
 
-#include <unordered_map>
+#include <map>
 
 struct LuaTable {
 private:
     LuaValue *_arr;
-    std::unordered_map<LuaValueID, LuaValue> _map;
+    std::map<LuaValue, LuaValue> _map;
 
     LuaTable(int nArr, int nRec) {
         if(nArr > 0) {
@@ -29,7 +29,18 @@ private:
     }
 
 public:
-    
+
+    LuaValue Get(LuaValue val) {
+        assert(val.GetType() != typeid(Nil).name() && "table index is nil!");
+
+        auto t = val.ConvertToInteger(val);
+        int idx = std::get<0>(t);
+        
+        if() {
+
+        }
+
+    }
 
 };
 
