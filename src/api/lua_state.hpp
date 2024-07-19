@@ -109,10 +109,15 @@ public:
     void GetConst(int idx);     // push current const to stack
     void GetRK(int rk);         // push current const or stack value to stack
 
+private:
+    LuaType getTable(LuaValue t, LuaValue k);
+    void setTable(LuaValue t, LuaValue k, LuaValue v);
+public:
     /* lua table methods */
     /* get functions */
     void NewTable();
     void CreateTable();
+
     LuaType GetTable(int idx);
     LuaType GetField(int idx, std::string k);
     LuaType GetI(int idx, int64 i);
@@ -120,7 +125,7 @@ public:
     /* get functions */
     void SetTable(int idx);
     void SetField(int idx, std::string k);
-    void SetI(int idx, int64 n);
+    void SetI(int idx, int64 i);
 };
 
 
