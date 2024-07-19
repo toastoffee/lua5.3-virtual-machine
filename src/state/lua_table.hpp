@@ -23,7 +23,8 @@ private:
 //    std::vector<LuaValue> _arr;
     std::map<LuaValue, LuaValue> _map;
 
-    LuaTable(int nRec) {
+public:
+    LuaTable() {
 //        if(nArr > 0) {
 //            _arr = std::vector<LuaValue>(nArr);
 //        }

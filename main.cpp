@@ -6,6 +6,7 @@
 #include "src/binChunk/chunk_reader.hpp"
 
 #include "src/api/lua_state.hpp"
+#include "src/state/lua_table.hpp"
 
 #include "src/vm/inst.h"
 
@@ -61,39 +62,38 @@ int main() {
 //    ls.PrintStack();
 
     // 6.4 test vm
-    FILE* file = fopen("../lua_tests/luac.out", "rb");
-
-    if(!file) {
-        assert(false && "failed to open file.");
-    }
-
-    fseek(file, 0, SEEK_END);
-    long fileSize = ftell(file);
-    fseek(file, 0, SEEK_SET);
-
-    char* source = new char[fileSize];
-
-    fread(source, sizeof(byte), fileSize, file);
-    fclose(file);
-
-    Prototype p = UnDump((byte*)source);
-    ListChunk(&p);
-
-    int nRegs = (int) p.maxStackSize;
-    LuaState ls(nRegs + 8, &p);
-    ls.SetTop(nRegs);
-    while (true) {
-        int pc = ls.PC();
-        Instruction inst = ls.Fetch();
-        if(GetOpcode(inst) != OP_RETURN) {
-            Execute(inst, ls);
-            printf("[%02d] %s", pc + 1, GetOpName(inst).c_str());
-            ls.PrintStack();
-        } else {
-            break;
-        }
-    }
-
+//    FILE* file = fopen("../lua_tests/luac.out", "rb");
+//
+//    if(!file) {
+//        assert(false && "failed to open file.");
+//    }
+//
+//    fseek(file, 0, SEEK_END);
+//    long fileSize = ftell(file);
+//    fseek(file, 0, SEEK_SET);
+//
+//    char* source = new char[fileSize];
+//
+//    fread(source, sizeof(byte), fileSize, file);
+//    fclose(file);
+//
+//    Prototype p = UnDump((byte*)source);
+//    ListChunk(&p);
+//
+//    int nRegs = (int) p.maxStackSize;
+//    LuaState ls(nRegs + 8, &p);
+//    ls.SetTop(nRegs);
+//    while (true) {
+//        int pc = ls.PC();
+//        Instruction inst = ls.Fetch();
+//        if(GetOpcode(inst) != OP_RETURN) {
+//            Execute(inst, ls);
+//            printf("[%02d] %s", pc + 1, GetOpName(inst).c_str());
+//            ls.PrintStack();
+//        } else {
+//            break;
+//        }
+//    }
 
     return 0;
 }
