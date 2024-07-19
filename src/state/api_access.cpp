@@ -49,6 +49,7 @@ bool LuaState::IsBoolean(int idx) {
 }
 
 bool LuaState::IsString(int idx) {
+    LuaType a = Type(idx);
     return Type(idx) == LUA_TSTRING || Type(idx) == LUA_TNUMBER;
 }
 

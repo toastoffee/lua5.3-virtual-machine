@@ -58,6 +58,14 @@ public:
         printf("\n");
     }
 
+    void PrintTypesInverse() {
+        for (int i = -1; i >= -_stack->GetTop(); --i) {
+            auto t = TypeName(Type(i));
+            printf("[%d:%s]", i, t.c_str());
+        }
+        printf("---top:%d\n", _stack->GetTop());
+    }
+
     /* basic stack manipulation */
     int GetTop();
     int AbsIndex(int idx);

@@ -29,7 +29,7 @@ LuaType LuaState::GetTable(int idx) {
 LuaType LuaState::getTable(LuaValue t, LuaValue k) {
     assert(t.GetType() == typeid(LuaTable).name() && "not a table!");
 
-    LuaValue v = t.GetVal<LuaTable>().Get(k);
+    LuaValue v = t.GetPtr<LuaTable>()->Get(k);
     _stack->Push(v);
     return v.TypeOf(v);
 }
@@ -55,7 +55,7 @@ void LuaState::SetTable(int idx) {
 void LuaState::setTable(LuaValue t, LuaValue k, LuaValue v) {
     assert(t.GetType() == typeid(LuaTable).name() && "not a table!");
 
-    t.GetVal<LuaTable>().Put(k ,v);
+    t.GetPtr<LuaTable>()->Put(k ,v);
 }
 
 void LuaState::SetField(int idx, std::string k) {

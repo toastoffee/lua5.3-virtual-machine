@@ -23,7 +23,6 @@
 
 struct Nil{ };
 
-
 class LuaValue {
 private:
     void* _val;
@@ -58,7 +57,7 @@ public:
     }
 
     bool operator<(const LuaValue& v) const {
-        return _type < v._type;
+        return *(uint64*)_val < *(uint64*)v._val;
     }
 
     static LuaValue ConvertFromConst(Constant c) {
@@ -91,6 +90,11 @@ public:
     template<typename T>
     T GetVal(){
         return *(T*)_val;
+    }
+
+    template<typename T>
+    T* GetPtr(){
+        return (T*)_val;
     }
 
     bool ConvertToBoolean(LuaValue val) {

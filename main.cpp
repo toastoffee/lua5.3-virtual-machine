@@ -95,5 +95,40 @@ int main() {
 //        }
 //    }
 
+
+    // 7.5 lua table test
+    FILE* file = fopen("../lua_tests/table.out", "rb");
+
+    if(!file) {
+        assert(false && "failed to open file.");
+    }
+
+    fseek(file, 0, SEEK_END);
+    long fileSize = ftell(file);
+    fseek(file, 0, SEEK_SET);
+
+    char* source = new char[fileSize];
+
+    fread(source, sizeof(byte), fileSize, file);
+    fclose(file);
+
+    Prototype p = UnDump((byte*)source);
+    ListChunk(&p);
+
+    int nRegs = (int) p.maxStackSize;
+    LuaState ls(nRegs + 8, &p);
+    ls.SetTop(nRegs);
+    while (true) {
+        int pc = ls.PC();
+        Instruction inst = ls.Fetch();
+        if(GetOpcode(inst) != OP_RETURN) {
+            Execute(inst, ls);
+            printf("[%02d] %s", pc + 1, GetOpName(inst).c_str());
+            ls.PrintStack();
+        } else {
+            break;
+        }
+    }
+
     return 0;
 }

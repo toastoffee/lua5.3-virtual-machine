@@ -25,8 +25,8 @@ uint32 GetOpcode(Instruction i) {
 
 void ABC(Instruction i, int& a, int& b, int& c) {
     a = (int)((i >> 6) & 0xff);
-    b = (int)((i >> 14) & 0x1ff);
-    c = (int)((i >> 23) & 0x1ff);
+    c = (int)((i >> 14) & 0x1ff);
+    b = (int)((i >> 23) & 0x1ff);
     return;
 }
 

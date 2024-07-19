@@ -95,7 +95,9 @@ public:
 //            _map.erase(key);
 //        }
         assert(key.GetType() != typeid(Nil).name() && "table index is nil!");
+
         _map[key] = val;
+
     }
 
     int Len() {

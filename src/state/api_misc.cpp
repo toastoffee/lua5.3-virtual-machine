@@ -19,7 +19,7 @@ void LuaState::Len(int idx) {
         _stack->Push(newVal);
     }
     else if(val.GetType() == typeid(LuaTable).name()) {
-        auto newVal = LuaValue(val.GetVal<LuaTable>().Len());
+        auto newVal = LuaValue((int64)val.GetVal<LuaTable>().Len());
         _stack->Push(newVal);
     }
     else {

@@ -137,12 +137,8 @@ void _binaryArith(Instruction i, LuaVM& vm, ArithOp op) {
     ABC(i, a, b, c);
     a += 1;
 
-//    vm.GetRK(b);
-//    vm.GetRK(c);  // 为啥是反着的呢？？？？
-
-
-    vm.GetRK(c);
     vm.GetRK(b);
+    vm.GetRK(c);
 
     vm.Arith(op);
     vm.Replace(a);
@@ -197,7 +193,7 @@ void Inst::Concat(Instruction i, LuaVM& vm) {
 
     int n = c - b + 1;
     vm.CheckStack(n);
-    for (int j = 0; j < b; ++j) {
+    for (int j = b; j <= c; j++) {
         vm.PushValue(j);
     }
 
