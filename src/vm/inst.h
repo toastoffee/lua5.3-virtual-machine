@@ -21,6 +21,8 @@
 
 typedef LuaState LuaVM;
 
+const int LFIELDS_PER_FLUSH = 50;
+
 class Inst {
 
 public:
@@ -61,6 +63,10 @@ public:
     static void ForPrep(Instruction i, LuaVM& vm);
     static void ForLoop(Instruction i, LuaVM& vm);
 
+    static void NewTable(Instruction i, LuaVM& vm);
+    static void GetTable(Instruction i, LuaVM& vm);
+    static void SetTable(Instruction i, LuaVM& vm);
+    static void SetList(Instruction i, LuaVM& vm);
 };
 
 void Inst::Move(Instruction i, LuaVM& vm) {
@@ -287,8 +293,59 @@ void Inst::ForLoop(Instruction i, LuaVM &vm) {
         !isPositiveStep && vm.Compare(a+1, a, LUA_OPLE)) {
         vm.AddPC(sbx);
         vm.Copy(a, a+3);
+}
+
+}
+
+void Inst::NewTable(Instruction i, LuaVM &vm) {
+    int a, b, c;
+    ABC(i, a, b, c);
+    a += 1;
+
+    vm.CreateTable();
+    vm.Replace(a);
+}
+
+void Inst::GetTable(Instruction i, LuaVM &vm) {
+    int a, b, c;
+    ABC(i, a, b, c);
+    a += 1;
+    b += 1;
+
+    vm.GetRK(c);
+    vm.GetTable(b);
+    vm.Replace(a);
+}
+
+void Inst::SetTable(Instruction i, LuaVM &vm) {
+    int a, b, c;
+    ABC(i, a, b, c);
+    a += 1;
+
+    vm.GetRK(b);
+    vm.GetRK(c);
+    vm.SetTable(a);
+}
+
+void Inst::SetList(Instruction i, LuaVM &vm) {
+    int a, b, c;
+    ABC(i, a, b, c);
+    a += 1;
+
+    if(c > 0) {
+        c -= 1;
+    } else {
+        auto inst = vm.Fetch();
+        Ax(inst, c);
     }
 
+    int64 idx = c * LFIELDS_PER_FLUSH;
+
+    for (int j = 1; j <= b; ++j) {
+        idx++;
+        vm.PushValue(a + j);
+        vm.SetI(a, idx);
+    }
 }
 
 
