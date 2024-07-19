@@ -15,6 +15,7 @@
 
 #include "../state/lua_stack.hpp"
 #include "../vm/instruction_types.hpp"
+#include "../state/lua_table.hpp"
 
 
 typedef int LuaType;
@@ -107,6 +108,19 @@ public:
     Instruction Fetch();        // fetch current instruction, make pc point to next instruction
     void GetConst(int idx);     // push current const to stack
     void GetRK(int rk);         // push current const or stack value to stack
+
+    /* lua table methods */
+    /* get functions */
+    void NewTable();
+    void CreateTable();
+    LuaType GetTable(int idx);
+    LuaType GetField(int idx, std::string k);
+    LuaType GetI(int idx, int64 i);
+
+    /* get functions */
+    void SetTable(int idx);
+    void SetField(int idx, std::string k);
+    void SetI(int idx, int64 n);
 };
 
 
