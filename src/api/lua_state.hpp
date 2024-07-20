@@ -75,6 +75,10 @@ public:
         printf("---top:%d\n", _stack->GetTop());
     }
 
+    /* outer interface */
+    int Load(byte chunk[], std::string chunkName, std::string mode);
+    void Call(int nArgs, int nResults);
+
     /* basic stack manipulation */
     int GetTop();
     int AbsIndex(int idx);
