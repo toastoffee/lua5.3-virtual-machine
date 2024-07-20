@@ -19,13 +19,13 @@ void LuaState::AddPC(int n) {
 }
 
 Instruction LuaState::Fetch() {
-    Instruction i = _stack->_closure->prototype->code[_stack->_pc];
+    Instruction i = _stack->_closure->prototype.code[_stack->_pc];
     _stack->_pc++;
     return i;
 }
 
 void LuaState::GetConst(int idx) {
-    Constant c = _stack->_closure->prototype->constants[idx];
+    Constant c = _stack->_closure->prototype.constants[idx];
     _stack->Push(LuaValue::ConvertFromConst(c));
 }
 

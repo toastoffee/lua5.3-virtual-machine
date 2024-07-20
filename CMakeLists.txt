@@ -18,4 +18,5 @@ add_executable(lua5_3_decompiler
         src/state/api_vm.cpp
         src/state/lua_impl.cpp
         src/state/api_get.cpp
+        src/state/api_call.cpp
 )

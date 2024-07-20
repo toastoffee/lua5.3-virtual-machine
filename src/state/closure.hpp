@@ -16,7 +16,7 @@
 #include "../binChunk/chunk_types.hpp"
 
 struct Closure {
-    Prototype* prototype;
+    Prototype prototype;
 };
 
 #endif //LUA5_3_DECOMPILER_CLOSURE_HPP

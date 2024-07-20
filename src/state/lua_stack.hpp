@@ -19,7 +19,7 @@
 #include <algorithm>
 
 struct LuaStack {
-private:
+public:
     LuaValue *_slots;
     int _slotSize;
     int _top;
@@ -106,6 +106,15 @@ public:
             Reverse(to, from);
         }
     }
+
+    std::vector<LuaValue> PopN(int n){
+
+    }
+
+    void PushN(std::vector<LuaValue> vals, int n){
+
+    }
+
 };
 
 #endif //LUA5_3_DECOMPILER_LUA_STACK_HPP

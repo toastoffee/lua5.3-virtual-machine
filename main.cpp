@@ -1,22 +1,10 @@
 #include <iostream>
 #include <string>
 
-#include "src/binChunk/chunk_types.hpp"
-#include "src/binChunk/chunk_log.hpp"
-#include "src/binChunk/chunk_reader.hpp"
 
-#include "src/api/lua_state.hpp"
-#include "src/state/lua_table.hpp"
 
-#include "src/vm/inst.h"
 
 #include <algorithm>
-
-struct Node {
-public:
-    int x;
-    int y;
-};
 
 int main() {
 
@@ -134,7 +122,6 @@ int main() {
 //            break;
 //        }
 //    }
-
 
     return 0;
 }

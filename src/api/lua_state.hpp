@@ -78,6 +78,8 @@ public:
     /* outer interface */
     int Load(byte chunk[], std::string chunkName, std::string mode);
     void Call(int nArgs, int nResults);
+    void CallLuaClosure(int nArgs, int nResults, Closure* c);
+    void runLuaClosure();
 
     /* basic stack manipulation */
     int GetTop();
