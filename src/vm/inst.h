@@ -67,6 +67,13 @@ public:
     static void GetTable(Instruction i, LuaVM& vm);
     static void SetTable(Instruction i, LuaVM& vm);
     static void SetList(Instruction i, LuaVM& vm);
+
+    static void Closure(Instruction i, LuaVM& vm);
+    static void Call(Instruction i, LuaVM& vm);
+    static void Return(Instruction i, LuaVM& vm);
+    static void Vararg(Instruction i, LuaVM& vm);
+    static void TailCall(Instruction i, LuaVM& vm);
+    static void Self(Instruction i, LuaVM& vm);
 };
 
 void Inst::Move(Instruction i, LuaVM& vm) {
