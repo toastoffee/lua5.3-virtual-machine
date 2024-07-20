@@ -23,6 +23,11 @@ private:
     int _slotSize;
     int _top;
 
+    LuaStack* _prev;
+    // LuaClosure* _closure;
+    std::vector<LuaValue> _varargs;
+    int _pc;
+
 public:
 
     LuaStack(LuaValue slots[], int slotSize, int top) :
