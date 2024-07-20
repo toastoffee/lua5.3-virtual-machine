@@ -9,6 +9,7 @@
   */
 
 #include "lua_table.hpp"
+#include "closure.hpp"
 
 int LuaValue::TypeOf(LuaValue val) {
     if(val.GetType() == typeid(Nil).name()) {
@@ -28,6 +29,9 @@ int LuaValue::TypeOf(LuaValue val) {
     }
     else if(val.GetType() == typeid(LuaTable).name()) {
         return LUA_TTABLE;
+    }
+    else if(val.GetType() == typeid(Closure).name()) {
+        return LUA_TFUNCTION;
     }
     else{
         assert(false && "todo!");

@@ -14,6 +14,7 @@
 #define LUA5_3_DECOMPILER_LUA_STACK_HPP
 
 #include "lua_value.hpp"
+#include "closure.hpp"
 
 #include <algorithm>
 
@@ -24,7 +25,7 @@ private:
     int _top;
 
     LuaStack* _prev;
-    // LuaClosure* _closure;
+    Closure* _closure;
     std::vector<LuaValue> _varargs;
     int _pc;
 
