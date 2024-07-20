@@ -108,11 +108,23 @@ public:
     }
 
     std::vector<LuaValue> PopN(int n){
-
+        std::vector<LuaValue> vals;
+        for (int i = n - 1; i >= 0 ; i--) {
+            vals.push_back(Pop());
+        }
+        return vals;
     }
 
     void PushN(std::vector<LuaValue> vals, int n){
-
+        int nVals = vals.size();
+        if(n < 0){ n = nVals; }
+        for (int i = 0; i < n; i++) {
+            if(i < nVals) {
+                Push(vals[i]);
+            } else {
+                Push(LuaValue());
+            }
+        }
     }
 
 };
