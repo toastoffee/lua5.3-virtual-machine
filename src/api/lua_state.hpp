@@ -25,8 +25,6 @@ typedef int CompareOp;
 class LuaState {
 private:
     LuaStack *_stack;
-    Prototype* _proto;
-    int _pc;
 
     std::string boolToString(bool value) {
         return value ? "true" : "false";
@@ -34,8 +32,19 @@ private:
 
 public:
 
-    LuaState(int _stackSize, Prototype* proto) : _proto(proto), _pc(0){
+    LuaState(int _stackSize) {
         _stack = LuaStack::NewLuaStack(_stackSize);
+    }
+
+    void PushLuaStack(LuaStack* stack) {
+        stack->_prev = _stack;
+        _stack = stack;
+    }
+
+    void PopLuaStack() {
+        LuaStack* stack = _stack;
+        _stack = stack->_prev;
+        stack->_prev = nullptr;
     }
 
     void PrintStack() {

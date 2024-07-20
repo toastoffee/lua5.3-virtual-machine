@@ -11,21 +11,21 @@
 #include "../api/lua_state.hpp"
 
 int LuaState::PC() {
-    return _pc;
+    return _stack->_pc;
 }
 
 void LuaState::AddPC(int n) {
-    _pc += n;
+    _stack->_pc += n;
 }
 
 Instruction LuaState::Fetch() {
-    Instruction i = _proto->code[_pc];
-    _pc++;
+    Instruction i = _stack->_closure->prototype->code[_stack->_pc];
+    _stack->_pc++;
     return i;
 }
 
 void LuaState::GetConst(int idx) {
-    Constant c = _proto->constants[idx];
+    Constant c = _stack->_closure->prototype->constants[idx];
     _stack->Push(LuaValue::ConvertFromConst(c));
 }
 

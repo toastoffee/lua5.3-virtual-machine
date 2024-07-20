@@ -24,6 +24,7 @@ private:
     int _slotSize;
     int _top;
 
+public:
     LuaStack* _prev;
     Closure* _closure;
     std::vector<LuaValue> _varargs;
