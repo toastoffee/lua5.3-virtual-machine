@@ -23,7 +23,7 @@ typedef int ArithOp;
 typedef int CompareOp;
 
 class LuaState {
-private:
+public:
     LuaStack *_stack;
 
     std::string boolToString(bool value) {

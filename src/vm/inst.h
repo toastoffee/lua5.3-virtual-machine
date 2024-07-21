@@ -337,21 +337,22 @@ void Inst::SetList(Instruction i, LuaVM &vm) {
 
     if(c > 0) {
         c -= 1;
-    } else {
+    }
+    else {
         auto inst = vm.Fetch();
         Ax(inst, c);
     }
 
     bool bIsZero = b == 0;
     if(bIsZero) {
-        b = (int)vm.ToInteger(-1) - a - 1;
+        b = (int) (vm.ToInteger(-1) - a - 1);
         vm.Pop(1);
     }
 
     vm.CheckStack(1);
     int64 idx = c * LFIELDS_PER_FLUSH;
 
-    for (int j = 1; j <= b; ++j) {
+    for (int j = 1; j <= b; j++) {
         idx++;
         vm.PushValue(a + j);
         vm.SetI(a, idx);

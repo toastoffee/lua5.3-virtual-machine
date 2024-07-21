@@ -124,8 +124,7 @@ int main(int argc, char *argv[]) {
 //    }
 
     // 8.5 closure instructions test
-    std::string root = "../lua_tests/";
-    std::string dir = root + argv[1];
+    std::string dir = "../lua_tests/closure.out";
 
     FILE* file = fopen(dir.c_str(), "rb");
     if(!file) {
@@ -139,7 +138,8 @@ int main(int argc, char *argv[]) {
     fclose(file);
 
     LuaState ls(20);
-    ls.Load((byte*)source, argv[1], "b");
+    ls.Load((byte*)source, "closure.out", "b");
+
     ls.Call(0, 0);
 
     return 0;

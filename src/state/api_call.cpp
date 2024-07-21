@@ -12,10 +12,14 @@
 #include "../binChunk/chunk_reader.hpp"
 #include "../vm/opcodes.hpp"
 
+#include "../binChunk/chunk_log.hpp"
+
 int LuaState::Load(byte chunk[], std::string chunkName, std::string mode) {
 
     Prototype proto = UnDump(chunk);
     Closure c{.prototype = proto};
+
+    ListChunk(&proto);
 
     _stack->Push(LuaValue(c));
     return 0;
@@ -44,7 +48,7 @@ void LuaState::CallLuaClosure(int nArgs, int nResults, Closure *c) {
     auto funcAndArgs = _stack->PopN(nArgs + 1);
     funcAndArgs.erase(funcAndArgs.begin());
     newStack->PushN(funcAndArgs, nParams);
-    newStack->_top = nArgs;
+    newStack->_top = nRegs;
     if(nArgs > nParams && isVararg) {
         for (int i = 0; i < nParams; ++i) {
             funcAndArgs.erase(funcAndArgs.begin());
@@ -67,6 +71,8 @@ void LuaState::runLuaClosure() {
     for (;true;) {
         Instruction inst = Fetch();
         Execute(inst, *this);
+        printf("\t[%02d] %s", _stack->_pc, GetOpName(inst).c_str());
+        PrintTypesInverse();
         if(GetOpcode(inst) == OP_RETURN) {
             break;
         }
