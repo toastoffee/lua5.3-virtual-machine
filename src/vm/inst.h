@@ -424,4 +424,38 @@ void Inst::_return(Instruction i, LuaVM &vm) {
     }
 }
 
+void Inst::Vararg(Instruction i, LuaVM &vm) {
+    int a, b, _;
+    ABC(i, a, b, _);
+    a += 1;
+
+    if(b != 1) {
+        vm.LoadVarag(b-1);
+        _popResults(a, b, vm);
+    }
+}
+
+void Inst::TailCall(Instruction i, LuaVM &vm) {
+    int a, b, _;
+    ABC(i, a, b, _);
+    a += 1;
+    int c = 0;
+
+    int nArgs = _pushFuncAndArgs(a, b, vm);
+    vm.Call(nArgs, c-1);
+    _popResults(a, c, vm);
+}
+
+void Inst::Self(Instruction i, LuaVM &vm) {
+    int a, b, c;
+    ABC(i, a, b, c);
+    a += 1;
+    b += 1;
+
+    vm.Copy(b, a+1);
+    vm.GetRK(c);
+    vm.GetTable(b);
+    vm.Replace(a);
+}
+
 #endif //LUA5_3_DECOMPILER_INST_H
