@@ -70,7 +70,7 @@ public:
 
     static void Closure(Instruction i, LuaVM& vm);
     static void Call(Instruction i, LuaVM& vm);
-    static void Return(Instruction i, LuaVM& vm);
+    static void _return(Instruction i, LuaVM& vm);
     static void Vararg(Instruction i, LuaVM& vm);
     static void TailCall(Instruction i, LuaVM& vm);
     static void Self(Instruction i, LuaVM& vm);
@@ -351,5 +351,77 @@ void Inst::SetList(Instruction i, LuaVM &vm) {
     }
 }
 
+void Inst::Closure(Instruction i, LuaVM &vm) {
+    int a, bx;
+    ABx(i, a, bx);
+    a += 1;
+
+    vm.LoadProto(bx);
+    vm.Replace(a);
+}
+
+void _fixStack(int a, LuaVM &vm) {
+    int x = (int)vm.ToInteger(-1);
+    vm.Pop(1);
+
+    vm.CheckStack(x - a);
+    for (int i = a; i < x; i++) {
+        vm.PushValue(i);
+    }
+    vm.Rotate(vm.RegisterCount() + 1, x - a);
+}
+
+int _pushFuncAndArgs(int a, int b, LuaVM &vm) {
+    if(b >= 1) {
+        vm.CheckStack(b);
+        for (int i = a; i < a+b; i++) {
+            vm.PushValue(i);
+        }
+        return b-1;
+    } else {
+        _fixStack(a, vm);
+        return vm.GetTop() - vm.RegisterCount() - 1;
+    }
+}
+
+void _popResults(int a, int c, LuaVM &vm) {
+    if(c == 1)  {
+        // no results
+    } else if( c > 1) { // c-1 results
+        for (int i = a + c - 2; i >= a ; i--) {
+            vm.Replace(i);
+        }
+    } else {
+        vm.CheckStack(1);
+        vm.PushInteger((int64)a);
+    }
+}
+
+void Inst::Call(Instruction i, LuaVM &vm) {
+    int a, b, c;
+    ABC(i, a, b, c);
+    a += 1;
+
+    int nArgs = _pushFuncAndArgs(a, b, vm);
+    vm.Call(nArgs, c-1);
+    _popResults(a, c, vm);
+}
+
+void Inst::_return(Instruction i, LuaVM &vm) {
+    int a, b, _;
+    ABC(i, a, b, _);
+
+    if(b == 1) {
+        // no return values
+    }
+    else if(b > 1) {  // b-1 return values
+        vm.CheckStack(b - 1);
+        for (int j = a; j <= a+b-2 ; j++) {
+            vm.PushValue(j);
+        }
+    } else {
+        _fixStack(a, vm);
+    }
+}
 
 #endif //LUA5_3_DECOMPILER_INST_H
