@@ -336,7 +336,7 @@ void Inst::SetList(Instruction i, LuaVM &vm) {
     a += 1;
 
     if(c > 0) {
-        c -= 1;
+        c = c - 1;
     }
     else {
         auto inst = vm.Fetch();
@@ -359,7 +359,7 @@ void Inst::SetList(Instruction i, LuaVM &vm) {
     }
 
     if(bIsZero) {
-        for (int j = vm.RegisterCount() + 1; j <= vm.GetTop(); j++) {
+        for (int j = vm.RegisterCount()+1; j <= vm.GetTop(); j++) {
             idx++;
             vm.PushValue(j);
             vm.SetI(a, idx);

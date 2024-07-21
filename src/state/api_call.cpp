@@ -46,14 +46,12 @@ void LuaState::CallLuaClosure(int nArgs, int nResults, Closure *c) {
     newStack->_closure = c;
 
     auto funcAndArgs = _stack->PopN(nArgs + 1);
-    funcAndArgs.erase(funcAndArgs.begin());
-    newStack->PushN(funcAndArgs, nParams);
+    std::vector<LuaValue> vs1(funcAndArgs.begin() + 1, funcAndArgs.end());
+    newStack->PushN(vs1, nParams);
     newStack->_top = nRegs;
     if(nArgs > nParams && isVararg) {
-        for (int i = 0; i < nParams; ++i) {
-            funcAndArgs.erase(funcAndArgs.begin());
-        }
-        newStack->_varargs = funcAndArgs;
+        std::vector<LuaValue> vs2(funcAndArgs.begin() + nParams + 1, funcAndArgs.end());
+        newStack->_varargs = vs2;
     }
 
     PushLuaStack(newStack);
