@@ -2,11 +2,11 @@
 #include <string>
 
 
-
+#include "src/api/lua_state.hpp"
 
 #include <algorithm>
 
-int main() {
+int main(int argc, char *argv[]) {
 
     // 1. test unDump
 //    FILE* file = fopen("../lua_tests/luac.out", "rb");
@@ -122,6 +122,25 @@ int main() {
 //            break;
 //        }
 //    }
+
+    // 8.5 closure instructions test
+    std::string root = "../lua_tests/";
+    std::string dir = root + argv[1];
+
+    FILE* file = fopen(dir.c_str(), "rb");
+    if(!file) {
+        assert(false && "failed to open file.");
+    }
+    fseek(file, 0, SEEK_END);
+    long fileSize = ftell(file);
+    fseek(file, 0, SEEK_SET);
+    char* source = new char[fileSize];
+    fread(source, sizeof(byte), fileSize, file);
+    fclose(file);
+
+    LuaState ls(20);
+    ls.Load((byte*)source, argv[1], "b");
+    ls.Call(0, 0);
 
     return 0;
 }
