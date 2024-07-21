@@ -17,6 +17,7 @@
 
 struct Closure {
     Prototype prototype;
+
 };
 
 #endif //LUA5_3_DECOMPILER_CLOSURE_HPP

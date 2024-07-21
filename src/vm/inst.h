@@ -342,12 +342,30 @@ void Inst::SetList(Instruction i, LuaVM &vm) {
         Ax(inst, c);
     }
 
+    bool bIsZero = b == 0;
+    if(bIsZero) {
+        b = (int)vm.ToInteger(-1) - a - 1;
+        vm.Pop(1);
+    }
+
+    vm.CheckStack(1);
     int64 idx = c * LFIELDS_PER_FLUSH;
 
     for (int j = 1; j <= b; ++j) {
         idx++;
         vm.PushValue(a + j);
         vm.SetI(a, idx);
+    }
+
+    if(bIsZero) {
+        for (int j = vm.RegisterCount() + 1; j <= vm.GetTop(); j++) {
+            idx++;
+            vm.PushValue(j);
+            vm.SetI(a, idx);
+        }
+
+        // clear stack
+        vm.SetTop(vm.RegisterCount());
     }
 }
 
@@ -430,7 +448,7 @@ void Inst::Vararg(Instruction i, LuaVM &vm) {
     a += 1;
 
     if(b != 1) {
-        vm.LoadVarag(b-1);
+        vm.LoadVararg(b-1);
         _popResults(a, b, vm);
     }
 }

@@ -149,6 +149,11 @@ public:
     void SetTable(int idx);
     void SetField(int idx, std::string k);
     void SetI(int idx, int64 i);
+
+    /* closure extension */
+    int RegisterCount();
+    void LoadVararg(int n);
+    void LoadProto(int idx);
 };
 
 
