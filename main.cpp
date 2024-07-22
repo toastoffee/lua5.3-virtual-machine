@@ -124,23 +124,23 @@ int main(int argc, char *argv[]) {
 //    }
 
     // 8.5 closure instructions test
-    std::string dir = "../lua_tests/closure.out";
-
-    FILE* file = fopen(dir.c_str(), "rb");
-    if(!file) {
-        assert(false && "failed to open file.");
-    }
-    fseek(file, 0, SEEK_END);
-    long fileSize = ftell(file);
-    fseek(file, 0, SEEK_SET);
-    char* source = new char[fileSize];
-    fread(source, sizeof(byte), fileSize, file);
-    fclose(file);
-
-    LuaState ls(20);
-    ls.Load((byte*)source, "closure.out", "b");
-
-    ls.Call(0, 0);
+//    std::string dir = "../lua_tests/closure.out";
+//
+//    FILE* file = fopen(dir.c_str(), "rb");
+//    if(!file) {
+//        assert(false && "failed to open file.");
+//    }
+//    fseek(file, 0, SEEK_END);
+//    long fileSize = ftell(file);
+//    fseek(file, 0, SEEK_SET);
+//    char* source = new char[fileSize];
+//    fread(source, sizeof(byte), fileSize, file);
+//    fclose(file);
+//
+//    LuaState ls(20);
+//    ls.Load((byte*)source, "closure.out", "b");
+//
+//    ls.Call(0, 0);
 
     return 0;
 }

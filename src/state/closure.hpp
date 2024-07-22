@@ -15,9 +15,29 @@
 
 #include "../binChunk/chunk_types.hpp"
 
-struct Closure {
-    Prototype prototype;
+class LuaState;
 
+typedef int (*CPlusFunction)(LuaState&);
+
+struct Closure {
+    Prototype prototype;        // lua closure
+    CPlusFunction cPlusFunc;    // c++ closure
+    bool isLuaClosure;
+
+    static Closure NewLuaClosure(Prototype proto) {
+        return Closure{
+            .prototype = proto,
+            .cPlusFunc = nullptr,
+            .isLuaClosure = true
+        };
+    }
+
+    static Closure NewCPlusClosure(CPlusFunction func) {
+        return Closure{
+                .cPlusFunc = func,
+                .isLuaClosure = false
+        };
+    }
 };
 
 #endif //LUA5_3_DECOMPILER_CLOSURE_HPP

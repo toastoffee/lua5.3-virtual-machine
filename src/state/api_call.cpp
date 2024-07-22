@@ -17,7 +17,7 @@
 int LuaState::Load(byte chunk[], std::string chunkName, std::string mode) {
 
     Prototype proto = UnDump(chunk);
-    Closure c{.prototype = proto};
+    Closure c = Closure::NewLuaClosure(proto);
 
     ListChunk(&proto);
 

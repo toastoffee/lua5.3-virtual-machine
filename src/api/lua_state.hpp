@@ -22,6 +22,7 @@ typedef int LuaType;
 typedef int ArithOp;
 typedef int CompareOp;
 
+
 class LuaState {
 public:
     LuaStack *_stack;

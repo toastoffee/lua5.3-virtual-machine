@@ -20,4 +20,5 @@ add_executable(lua5_3_decompiler
         src/state/api_get.cpp
         src/state/api_call.cpp
         src/state/api_closure.cpp
+        src/api/lua_state.hpp
 )

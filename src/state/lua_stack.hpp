@@ -127,6 +127,17 @@ public:
         }
     }
 
+    void PushCPlusFunction(CPlusFunction f) {
+
+    }
+
+    bool IsCPlusFunction(int idx) {
+
+    }
+
+    CPlusFunction ToCPlusFunction(int idx) {
+
+    }
 };
 
 #endif //LUA5_3_DECOMPILER_LUA_STACK_HPP
