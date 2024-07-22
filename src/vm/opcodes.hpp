@@ -93,6 +93,7 @@ byte GetCMode(Instruction i) {
 }
 
 void Execute(Instruction i, LuaVM& vm) {
+    uint32 k = GetOpcode(i);
     auto instFunc = opcodes[GetOpcode(i)].instFunc;
     assert(instFunc != nullptr && opcodes[GetOpcode(i)].name);
     instFunc(i, vm);

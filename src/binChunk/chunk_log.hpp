@@ -123,6 +123,10 @@ void ListChunk(Prototype* prototype) {
     PrintConstants(prototype);
     PrintLocVars(prototype);
     PrintUpValue(prototype);
+
+    for (auto p: prototype->prototypes) {
+        ListChunk(&p);
+    }
 }
 
 #endif //LUA5_3_DECOMPILER_CHUNK_LOG_HPP

@@ -213,6 +213,7 @@ void _compare(Instruction i, LuaVM& vm, CompareOp op) {
     ABC(i, a, b, c);
     vm.GetRK(b);
     vm.GetRK(c);
+
     if(vm.Compare(-2, -1, op) != (a != 0)) {
         vm.AddPC(1);
     }

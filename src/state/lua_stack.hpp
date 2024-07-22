@@ -110,7 +110,7 @@ public:
     std::vector<LuaValue> PopN(int n){
         std::vector<LuaValue> vals;
         for (int i = n - 1; i >= 0 ; i--) {
-            vals.push_back(Pop());
+            vals.insert(vals.begin(), Pop());
         }
         return vals;
     }

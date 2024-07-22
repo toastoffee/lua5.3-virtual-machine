@@ -69,8 +69,7 @@ void LuaState::runLuaClosure() {
     for (;true;) {
         Instruction inst = Fetch();
         Execute(inst, *this);
-        printf("\t[%02d] %s", _stack->_pc, GetOpName(inst).c_str());
-        PrintTypesInverse();
+//        printf("\t[%02d] %s", _stack->_pc, GetOpName(inst).c_str());
         if(GetOpcode(inst) == OP_RETURN) {
             break;
         }
